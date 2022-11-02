@@ -45,16 +45,76 @@ func TestCheckLeftPos(t *testing.T) {
 	}
 }
 
-func TestCheckUpPos(t *testing.T) {
-	// 通常
-	// if worldSeed().CheckUpPos(4) != worldSeed()[1] {
-	// 	t.Errorf("is not match")
-	// }
+func TestCheckRightPos(t *testing.T) {
+	w := worldSeed()
 
-	// // 乗り越え
-	// if worldSeed().CheckUpPos(1) != worldSeed()[7] {
-	// 	t.Errorf("is not match")
-	// }
+	tests := []struct {
+		input    int64
+		expected bool
+	}{
+		{1, true},
+		{2, false},
+		{3, false},
+		{4, true},
+		{5, true},
+		{6, true},
+	}
+
+	for _, tt := range tests {
+		if w.CheckRightPos(tt.input) != tt.expected {
+			t.Errorf("input: %v is not match", tt.input)
+		}
+	}
+}
+
+func TestCheckUpPos(t *testing.T) {
+	// ○●○
+	// ●●●
+	// ○●○
+	w := worldSeed()
+
+	tests := []struct {
+		input    int64
+		expected bool
+	}{
+		{1, false},
+		{2, true},
+		{3, false},
+		{4, false},
+		{5, true},
+		{6, false},
+	}
+
+	for _, tt := range tests {
+		if w.CheckUpPos(tt.input) != tt.expected {
+			t.Errorf("input: %v is not match", tt.input)
+		}
+	}
+}
+
+func TestCheckDownPos(t *testing.T) {
+	w := worldSeed()
+
+	tests := []struct {
+		input    int64
+		expected bool
+	}{
+		{1, true},
+		{2, true},
+		{3, true},
+		{4, false},
+		{5, true},
+		{6, false},
+		{7, false},
+		{8, true},
+		{9, false},
+	}
+
+	for _, tt := range tests {
+		if w.CheckDownPos(tt.input) != tt.expected {
+			t.Errorf("input: %v is not match", tt.input)
+		}
+	}
 }
 
 func TestIntToCord(t *testing.T) {

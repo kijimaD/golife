@@ -48,16 +48,53 @@ func (w World) CheckLeftPos(i int64) bool {
 	return w[newC.CordToInt()-1].IsLive
 }
 
-// func (w World) CheckRightPos(i int64) Cell {
+func (w World) CheckRightPos(i int64) bool {
+	c := IntToCord(i)
 
-// }
+	var tx int64
+	if c.x == COL {
+		// 左端へ
+		tx = 1
+	} else {
+		tx = c.x + 1
+	}
 
-// func (w World) CheckUpPos(i int64) Cell {
+	newC := Cord{tx, c.y}
 
-// }
+	return w[newC.CordToInt()-1].IsLive
+}
 
-// func (w World) CheckDownPos(i int64) Cell {
-// }
+func (w World) CheckUpPos(i int64) bool {
+	c := IntToCord(i)
+
+	var ty int64
+	if c.y == 1 {
+		// 下端へ
+		ty = ROW
+	} else {
+		ty = c.y - 1
+	}
+
+	newC := Cord{c.x, ty}
+
+	return w[newC.CordToInt()-1].IsLive
+}
+
+func (w World) CheckDownPos(i int64) bool {
+	c := IntToCord(i)
+
+	var ty int64
+	if c.y == ROW {
+		// 上端へ
+		ty = 1
+	} else {
+		ty = c.y + 1
+	}
+
+	newC := Cord{c.x, ty}
+
+	return w[newC.CordToInt()-1].IsLive
+}
 
 func IntToCord(idx int64) Cord {
 	var cx int64
