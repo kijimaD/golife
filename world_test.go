@@ -9,17 +9,19 @@ func worldSeed() World {
 	// ●●●
 	// ○●○
 	return World{
-		NewCell(false),
-		NewCell(true),
-		NewCell(false),
+		cells: []Cell{
+			NewCell(false),
+			NewCell(true),
+			NewCell(false),
 
-		NewCell(true),
-		NewCell(true),
-		NewCell(true),
+			NewCell(true),
+			NewCell(true),
+			NewCell(true),
 
-		NewCell(false),
-		NewCell(true),
-		NewCell(false),
+			NewCell(false),
+			NewCell(true),
+			NewCell(false),
+		},
 	}
 }
 
@@ -45,7 +47,7 @@ func TestCalcScore(t *testing.T) {
 	w.calcScore()
 
 	for i, tt := range tests {
-		if w[i].score != tt.expected {
+		if w.cells[i].score != tt.expected {
 			t.Errorf("input: %v is not match", i)
 		}
 	}
@@ -73,7 +75,7 @@ func TestResetScore(t *testing.T) {
 	w.resetScore()
 
 	for i, tt := range tests {
-		if w[i].score != tt.expected {
+		if w.cells[i].score != tt.expected {
 			t.Errorf("input: %v is not match", i)
 		}
 	}

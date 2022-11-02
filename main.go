@@ -11,17 +11,18 @@ func main() {
 	// ●●●
 	// ○●○
 	world := World{
-		NewCell(false),
-		NewCell(true),
-		NewCell(false),
+		cells: []Cell{NewCell(false),
+			NewCell(true),
+			NewCell(false),
 
-		NewCell(true),
-		NewCell(true),
-		NewCell(true),
+			NewCell(true),
+			NewCell(true),
+			NewCell(true),
 
-		NewCell(false),
-		NewCell(true),
-		NewCell(false),
+			NewCell(false),
+			NewCell(true),
+			NewCell(false),
+		},
 	}
 
 	for true {
@@ -32,7 +33,7 @@ func main() {
 		scanner.Scan()
 		world.evalScore()
 
-		for i, c := range world {
+		for i, c := range world.cells {
 			if c.IsLive {
 				fmt.Print("●")
 			} else {
@@ -50,7 +51,9 @@ const ROW = 3
 const COL = 3
 
 // 全体
-type World []Cell
+type World struct {
+	cells []Cell
+}
 
 type Cell struct {
 	IsLive bool
@@ -62,18 +65,18 @@ func NewCell(isLive bool) Cell {
 }
 
 func (w World) calcScore() World {
-	for i, _ := range w {
+	for i, _ := range w.cells {
 		if w.CheckUpPos(int64(i + 1)) {
-			w[i].score += 1
+			w.cells[i].score += 1
 		}
 		if w.CheckRightPos(int64(i + 1)) {
-			w[i].score += 1
+			w.cells[i].score += 1
 		}
 		if w.CheckDownPos(int64(i + 1)) {
-			w[i].score += 1
+			w.cells[i].score += 1
 		}
 		if w.CheckLeftPos(int64(i + 1)) {
-			w[i].score += 1
+			w.cells[i].score += 1
 		}
 	}
 
@@ -81,15 +84,15 @@ func (w World) calcScore() World {
 }
 
 func (w World) evalScore() World {
-	for i, c := range w {
+	for i, c := range w.cells {
 		if c.score == 3 {
-			w[i].IsLive = true
+			w.cells[i].IsLive = true
 		} else if c.score == 2 {
-			w[i].IsLive = true
+			w.cells[i].IsLive = true
 		} else if c.score <= 1 {
-			w[i].IsLive = false
+			w.cells[i].IsLive = false
 		} else if c.score >= 4 {
-			w[i].IsLive = false
+			w.cells[i].IsLive = false
 		}
 	}
 
@@ -98,8 +101,8 @@ func (w World) evalScore() World {
 
 // リセットできない
 func (w World) resetScore() World {
-	for i, _ := range w {
-		w[i].score = 0
+	for i, _ := range w.cells {
+		w.cells[i].score = 0
 	}
 
 	return w
@@ -119,7 +122,7 @@ func (w World) CheckLeftPos(i int64) bool {
 	newC := Cord{tx, c.y}
 
 	// 1始まり
-	return w[newC.CordToInt()-1].IsLive
+	return w.cells[newC.CordToInt()-1].IsLive
 }
 
 func (w World) CheckRightPos(i int64) bool {
@@ -135,7 +138,7 @@ func (w World) CheckRightPos(i int64) bool {
 
 	newC := Cord{tx, c.y}
 
-	return w[newC.CordToInt()-1].IsLive
+	return w.cells[newC.CordToInt()-1].IsLive
 }
 
 func (w World) CheckUpPos(i int64) bool {
@@ -151,7 +154,7 @@ func (w World) CheckUpPos(i int64) bool {
 
 	newC := Cord{c.x, ty}
 
-	return w[newC.CordToInt()-1].IsLive
+	return w.cells[newC.CordToInt()-1].IsLive
 }
 
 func (w World) CheckDownPos(i int64) bool {
@@ -167,7 +170,7 @@ func (w World) CheckDownPos(i int64) bool {
 
 	newC := Cord{c.x, ty}
 
-	return w[newC.CordToInt()-1].IsLive
+	return w.cells[newC.CordToInt()-1].IsLive
 }
 
 func IntToCord(idx int64) Cord {
