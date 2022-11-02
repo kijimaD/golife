@@ -25,11 +25,24 @@ func main() {
 	}
 
 	for true {
+		world.resetScore().calcScore()
 		fmt.Println(world)
 		fmt.Print("enter: ")
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
-		world.calcScore()
+		world.evalScore()
+
+		for i, c := range world {
+			if c.IsLive {
+				fmt.Print("●")
+			} else {
+				fmt.Print("○")
+			}
+
+			if (i+1)%COL == 0 {
+				fmt.Println("")
+			}
+		}
 	}
 }
 
@@ -67,10 +80,28 @@ func (w World) calcScore() World {
 	return w
 }
 
-func (w World) resetScore() World {
-	for _, c := range w {
-		c.score = 0
+func (w World) evalScore() World {
+	for i, c := range w {
+		if c.score == 3 {
+			w[i].IsLive = true
+		} else if c.score == 2 {
+			w[i].IsLive = true
+		} else if c.score <= 1 {
+			w[i].IsLive = false
+		} else if c.score >= 4 {
+			w[i].IsLive = false
+		}
 	}
+
+	return w
+}
+
+// リセットできない
+func (w World) resetScore() World {
+	for i, _ := range w {
+		w[i].score = 0
+	}
+
 	return w
 }
 

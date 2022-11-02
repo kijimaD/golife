@@ -23,7 +23,7 @@ func worldSeed() World {
 	}
 }
 
-func TestGetScore(t *testing.T) {
+func TestCalcScore(t *testing.T) {
 	w := worldSeed()
 
 	tests := []struct {
