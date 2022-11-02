@@ -51,6 +51,34 @@ func TestGetScore(t *testing.T) {
 	}
 }
 
+func TestResetScore(t *testing.T) {
+	w := worldSeed()
+
+	tests := []struct {
+		expected int
+	}{
+		{0},
+		{0},
+		{0},
+
+		{0},
+		{0},
+		{0},
+
+		{0},
+		{0},
+		{0},
+	}
+
+	w.resetScore()
+
+	for i, tt := range tests {
+		if w[i].score != tt.expected {
+			t.Errorf("input: %v is not match", i)
+		}
+	}
+}
+
 func TestCheckLeftPos(t *testing.T) {
 	w := worldSeed()
 

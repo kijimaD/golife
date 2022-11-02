@@ -67,6 +67,13 @@ func (w World) calcScore() World {
 	return w
 }
 
+func (w World) resetScore() World {
+	for _, c := range w {
+		c.score = 0
+	}
+	return w
+}
+
 func (w World) CheckLeftPos(i int64) bool {
 	c := IntToCord(i)
 
