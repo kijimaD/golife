@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -232,3 +233,35 @@ func TestCordToInt(t *testing.T) {
 		}
 	}
 }
+
+func TestCalcIndex(t *testing.T) {
+	tests := []struct {
+		iw       int
+		ix       int
+		ip       int
+		expected int
+	}{
+		{3, 0, 2, 2},
+		{3, 0, 1, 1},
+		{3, 0, 0, 0},
+		{3, 0, -1, 2},
+		{3, 0, -2, 1},
+		{3, 0, -3, 0},
+		{3, 0, -4, 2},
+	}
+
+	for i, tt := range tests {
+		if calcIndex(tt.iw, tt.ix, tt.ip) != tt.expected {
+			fmt.Println(calcIndex(tt.iw, tt.ix, tt.ip))
+			t.Errorf("idx: %d is not match", i)
+		}
+	}
+}
+
+// ９つのマスを数を数える
+// 方向は関係なく
+
+// 畳み込み?
+
+// 向こう側にいく処理の条件分岐をなくす
+// -インデックスを使う? 長さ３の配列だと、-1 == 3 みたいな

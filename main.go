@@ -1,52 +1,93 @@
 package main
 
 import (
-	"bufio"
+	// "bufio"
+	// "os"
 	"fmt"
-	"os"
 )
 
 func main() {
 	// ○●○
 	// ●●●
 	// ○●○
-	world := World{
-		row: 3,
-		col: 3,
-		cells: []Cell{NewCell(false),
-			NewCell(true),
-			NewCell(false),
+	// world := World{
+	// 	row: 5,
+	// 	col: 5,
+	// 	cells: []Cell{
+	// 		NewCell(false),
+	// 		NewCell(false),
+	// 		NewCell(false),
+	// 		NewCell(false),
+	// 		NewCell(false),
 
-			NewCell(true),
-			NewCell(true),
-			NewCell(true),
+	// 		NewCell(false),
+	// 		NewCell(true),
+	// 		NewCell(true),
+	// 		NewCell(false),
+	// 		NewCell(false),
 
-			NewCell(false),
-			NewCell(true),
-			NewCell(false),
-		},
-	}
+	// 		NewCell(false),
+	// 		NewCell(false),
+	// 		NewCell(false),
+	// 		NewCell(false),
+	// 		NewCell(false),
 
-	for true {
-		world.resetScore().calcScore()
-		fmt.Println(world)
-		fmt.Print("enter: ")
-		scanner := bufio.NewScanner(os.Stdin)
-		scanner.Scan()
-		world.evalScore()
+	// 		NewCell(false),
+	// 		NewCell(true),
+	// 		NewCell(true),
+	// 		NewCell(true),
+	// 		NewCell(false),
 
-		for i, c := range world.cells {
-			if c.IsLive {
-				fmt.Print("●")
-			} else {
-				fmt.Print("○")
-			}
+	// 		NewCell(false),
+	// 		NewCell(false),
+	// 		NewCell(false),
+	// 		NewCell(false),
+	// 		NewCell(false),
+	// 	},
+	// }
 
-			if (i+1)%int(world.col) == 0 {
-				fmt.Println("")
-			}
-		}
-	}
+	// for true {
+	// 	for i, c := range world.cells {
+	// 		if c.IsLive {
+	// 			fmt.Print("●")
+	// 		} else {
+	// 			fmt.Print("○")
+	// 		}
+
+	// 		if (i+1)%int(world.col) == 0 {
+	// 			fmt.Println("")
+	// 		}
+	// 	}
+
+	// 	world.resetScore().calcScore()
+	// 	fmt.Println(world)
+	// 	fmt.Print("enter: ")
+	// 	scanner := bufio.NewScanner(os.Stdin)
+	// 	scanner.Scan()
+	// 	world.evalScore()
+	// }
+
+	// 円
+
+	fmt.Println("base", calcIndex(9, 4, 0))  // base
+	fmt.Println("up", calcIndex(9, 4, -3))   // -w
+	fmt.Println("ru", calcIndex(9, 4, -2))   // -w + 1
+	fmt.Println("right", calcIndex(9, 4, 1)) // + 1
+	fmt.Println("rd", calcIndex(9, 4, 4))    // w + 1
+	fmt.Println("down", calcIndex(9, 4, 3))  // w
+	fmt.Println("ld", calcIndex(9, 4, 2))    // -w + 1
+	fmt.Println("left", calcIndex(9, 4, -1)) // - 1
+	fmt.Println("lu", calcIndex(9, 4, -4))   // -w - 1
+
+	fmt.Println("lu", calcIndex(9, 4, -4))
+	fmt.Println("up", calcIndex(9, 4, -3))
+	fmt.Println("ru", calcIndex(9, 4, -2))
+	fmt.Println("left", calcIndex(9, 4, -1))
+	fmt.Println("base", calcIndex(9, 4, 0))
+	fmt.Println("right", calcIndex(9, 4, 1))
+	fmt.Println("ld", calcIndex(9, 4, 2))
+	fmt.Println("down", calcIndex(9, 4, 3))
+	fmt.Println("rd", calcIndex(9, 4, 4))
 }
 
 // 全体
@@ -205,3 +246,19 @@ type Cord struct {
 func (c *Cord) CordToInt(col int64, row int64) int64 {
 	return (c.x-1)%col + 1 + ((c.y - 1) * row)
 }
+
+func calcIndex(w int, x int, r int) int {
+	// x: 基準になるインデックス
+	// r: 相対的な位置
+	nx := (x + r) % w
+	if nx < 0 {
+		nx += w
+	}
+
+	return nx
+}
+
+// 引数で渡す
+
+// 方向関係なく、９つのマスの合計を数える
+// 引数指定にする
