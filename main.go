@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import ()
 
 func main() {
 	// ○●○
@@ -22,7 +20,12 @@ func main() {
 		Cell{false},
 	}
 
-	fmt.Println(world)
+	for i, _ := range world {
+		world.CheckUpPos(int64(i))
+		world.CheckRightPos(int64(i))
+		world.CheckDownPos(int64(i))
+		world.CheckLeftPos(int64(i))
+	}
 }
 
 const ROW = 3
@@ -30,6 +33,10 @@ const COL = 3
 
 // 全体
 type World []Cell
+
+type Cell struct {
+	IsLive bool
+}
 
 func (w World) CheckLeftPos(i int64) bool {
 	c := IntToCord(i)
@@ -117,11 +124,6 @@ func IntToCord(idx int64) Cord {
 	}
 
 	return Cord{x: cx, y: cy}
-}
-
-// セル１つ１つ
-type Cell struct {
-	IsLive bool
 }
 
 type Cord struct {
