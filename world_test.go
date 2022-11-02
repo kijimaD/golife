@@ -9,17 +9,17 @@ func worldSeed() World {
 	// ●●●
 	// ○●○
 	return World{
-		Cell{false},
-		Cell{true},
-		Cell{false},
+		NewCell(false),
+		NewCell(true),
+		NewCell(false),
 
-		Cell{true},
-		Cell{true},
-		Cell{true},
+		NewCell(true),
+		NewCell(true),
+		NewCell(true),
 
-		Cell{false},
-		Cell{true},
-		Cell{false},
+		NewCell(false),
+		NewCell(true),
+		NewCell(false),
 	}
 }
 

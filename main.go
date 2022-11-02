@@ -7,24 +7,32 @@ func main() {
 	// ●●●
 	// ○●○
 	world := World{
-		Cell{false},
-		Cell{true},
-		Cell{false},
+		NewCell(false),
+		NewCell(true),
+		NewCell(false),
 
-		Cell{true},
-		Cell{true},
-		Cell{true},
+		NewCell(true),
+		NewCell(true),
+		NewCell(true),
 
-		Cell{false},
-		Cell{true},
-		Cell{false},
+		NewCell(false),
+		NewCell(true),
+		NewCell(false),
 	}
 
 	for i, _ := range world {
-		world.CheckUpPos(int64(i))
-		world.CheckRightPos(int64(i))
-		world.CheckDownPos(int64(i))
-		world.CheckLeftPos(int64(i))
+		if world.CheckUpPos(int64(i)) {
+			world[i].score += 1
+		}
+		if world.CheckRightPos(int64(i)) {
+			world[i].score += 1
+		}
+		if world.CheckDownPos(int64(i)) {
+			world[i].score += 1
+		}
+		if world.CheckLeftPos(int64(i)) {
+			world[i].score += 1
+		}
 	}
 }
 
@@ -36,6 +44,11 @@ type World []Cell
 
 type Cell struct {
 	IsLive bool
+	score  int
+}
+
+func NewCell(isLive bool) Cell {
+	return Cell{isLive, 0}
 }
 
 func (w World) CheckLeftPos(i int64) bool {
