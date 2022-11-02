@@ -23,6 +23,34 @@ func worldSeed() World {
 	}
 }
 
+func TestGetScore(t *testing.T) {
+	w := worldSeed()
+
+	tests := []struct {
+		expected int
+	}{
+		{2},
+		{2},
+		{2},
+
+		{2},
+		{4},
+		{2},
+
+		{2},
+		{2},
+		{2},
+	}
+
+	w.calcScore()
+
+	for i, tt := range tests {
+		if w[i].score != tt.expected {
+			t.Errorf("input: %v is not match", i)
+		}
+	}
+}
+
 func TestCheckLeftPos(t *testing.T) {
 	w := worldSeed()
 
@@ -37,6 +65,10 @@ func TestCheckLeftPos(t *testing.T) {
 		{4, true},
 		{5, true},
 		{6, true},
+
+		{7, false},
+		{8, false},
+		{9, true},
 	}
 
 	for _, tt := range tests {

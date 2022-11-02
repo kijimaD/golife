@@ -1,6 +1,10 @@
 package main
 
-import ()
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
 
 func main() {
 	// ○●○
@@ -20,19 +24,12 @@ func main() {
 		NewCell(false),
 	}
 
-	for i, _ := range world {
-		if world.CheckUpPos(int64(i)) {
-			world[i].score += 1
-		}
-		if world.CheckRightPos(int64(i)) {
-			world[i].score += 1
-		}
-		if world.CheckDownPos(int64(i)) {
-			world[i].score += 1
-		}
-		if world.CheckLeftPos(int64(i)) {
-			world[i].score += 1
-		}
+	for true {
+		fmt.Println(world)
+		fmt.Print("enter: ")
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan()
+		world.calcScore()
 	}
 }
 
@@ -49,6 +46,25 @@ type Cell struct {
 
 func NewCell(isLive bool) Cell {
 	return Cell{isLive, 0}
+}
+
+func (w World) calcScore() World {
+	for i, _ := range w {
+		if w.CheckUpPos(int64(i + 1)) {
+			w[i].score += 1
+		}
+		if w.CheckRightPos(int64(i + 1)) {
+			w[i].score += 1
+		}
+		if w.CheckDownPos(int64(i + 1)) {
+			w[i].score += 1
+		}
+		if w.CheckLeftPos(int64(i + 1)) {
+			w[i].score += 1
+		}
+	}
+
+	return w
 }
 
 func (w World) CheckLeftPos(i int64) bool {
