@@ -5,6 +5,9 @@ import (
 )
 
 func worldSeed() World {
+	// ○●○
+	// ●●●
+	// ○●○
 	return World{
 		Cell{false},
 		Cell{true},
@@ -17,6 +20,28 @@ func worldSeed() World {
 		Cell{false},
 		Cell{true},
 		Cell{false},
+	}
+}
+
+func TestCheckLeftPos(t *testing.T) {
+	w := worldSeed()
+
+	tests := []struct {
+		input    int64
+		expected bool
+	}{
+		{1, false},
+		{2, false},
+		{3, true},
+		{4, true},
+		{5, true},
+		{6, true},
+	}
+
+	for _, tt := range tests {
+		if w.CheckLeftPos(tt.input) != tt.expected {
+			t.Errorf("input: %v is not match", tt.input)
+		}
 	}
 }
 
@@ -53,5 +78,27 @@ func TestIntToCord(t *testing.T) {
 			t.Errorf("%v: %v is not match, expected: %v", tt.input, c, tt.expected)
 		}
 	}
+}
 
+func TestCordToInt(t *testing.T) {
+	tests := []struct {
+		input    Cord
+		expected int64
+	}{
+		{Cord{1, 1}, 1},
+		{Cord{2, 1}, 2},
+		{Cord{3, 1}, 3},
+		{Cord{1, 2}, 4},
+		{Cord{2, 2}, 5},
+		{Cord{3, 2}, 6},
+		{Cord{1, 3}, 7},
+		{Cord{2, 3}, 8},
+		{Cord{3, 3}, 9},
+	}
+
+	for _, tt := range tests {
+		if i := tt.input.CordToInt(); i != tt.expected {
+			t.Errorf("%v: %v is not match, expected: %v", tt.input, i, tt.expected)
+		}
+	}
 }

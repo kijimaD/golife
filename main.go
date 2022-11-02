@@ -25,20 +25,28 @@ func main() {
 	fmt.Println(world)
 }
 
-// 各セルをbooleanのスライスで表す
-// [ true, true, false, true ]
-// ●●
-// ○●
-
 const ROW = 3
 const COL = 3
 
 // 全体
 type World []Cell
 
-// func (w World) CheckLeftPos(i int64) Cell {
+func (w World) CheckLeftPos(i int64) bool {
+	c := IntToCord(i)
 
-// }
+	var tx int64
+	if c.x == 1 {
+		// 右端へ
+		tx = COL
+	} else {
+		tx = c.x - 1
+	}
+
+	newC := Cord{tx, c.y}
+
+	// 1始まり
+	return w[newC.CordToInt()-1].IsLive
+}
 
 // func (w World) CheckRightPos(i int64) Cell {
 
@@ -82,4 +90,8 @@ type Cell struct {
 type Cord struct {
 	x int64
 	y int64
+}
+
+func (c *Cord) CordToInt() int64 {
+	return (c.x-1)%ROW + 1 + ((c.y - 1) * COL)
 }
