@@ -11,6 +11,8 @@ func main() {
 	// ●●●
 	// ○●○
 	world := World{
+		row: 3,
+		col: 3,
 		cells: []Cell{NewCell(false),
 			NewCell(true),
 			NewCell(false),
@@ -40,18 +42,17 @@ func main() {
 				fmt.Print("○")
 			}
 
-			if (i+1)%COL == 0 {
+			if (i+1)%int(world.col) == 0 {
 				fmt.Println("")
 			}
 		}
 	}
 }
 
-const ROW = 3
-const COL = 3
-
 // 全体
 type World struct {
+	row   int64
+	col   int64
 	cells []Cell
 }
 
@@ -109,12 +110,12 @@ func (w World) resetScore() World {
 }
 
 func (w World) CheckLeftPos(i int64) bool {
-	c := IntToCord(i)
+	c := w.IntToCord(i)
 
 	var tx int64
 	if c.x == 1 {
 		// 右端へ
-		tx = COL
+		tx = w.col
 	} else {
 		tx = c.x - 1
 	}
@@ -122,14 +123,14 @@ func (w World) CheckLeftPos(i int64) bool {
 	newC := Cord{tx, c.y}
 
 	// 1始まり
-	return w.cells[newC.CordToInt()-1].IsLive
+	return w.cells[newC.CordToInt(w.row, w.col)-1].IsLive
 }
 
 func (w World) CheckRightPos(i int64) bool {
-	c := IntToCord(i)
+	c := w.IntToCord(i)
 
 	var tx int64
-	if c.x == COL {
+	if c.x == w.col {
 		// 左端へ
 		tx = 1
 	} else {
@@ -138,30 +139,30 @@ func (w World) CheckRightPos(i int64) bool {
 
 	newC := Cord{tx, c.y}
 
-	return w.cells[newC.CordToInt()-1].IsLive
+	return w.cells[newC.CordToInt(w.row, w.col)-1].IsLive
 }
 
 func (w World) CheckUpPos(i int64) bool {
-	c := IntToCord(i)
+	c := w.IntToCord(i)
 
 	var ty int64
 	if c.y == 1 {
 		// 下端へ
-		ty = ROW
+		ty = w.row
 	} else {
 		ty = c.y - 1
 	}
 
 	newC := Cord{c.x, ty}
 
-	return w.cells[newC.CordToInt()-1].IsLive
+	return w.cells[newC.CordToInt(w.row, w.col)-1].IsLive
 }
 
 func (w World) CheckDownPos(i int64) bool {
-	c := IntToCord(i)
+	c := w.IntToCord(i)
 
 	var ty int64
-	if c.y == ROW {
+	if c.y == w.row {
 		// 上端へ
 		ty = 1
 	} else {
@@ -170,27 +171,27 @@ func (w World) CheckDownPos(i int64) bool {
 
 	newC := Cord{c.x, ty}
 
-	return w.cells[newC.CordToInt()-1].IsLive
+	return w.cells[newC.CordToInt(w.row, w.col)-1].IsLive
 }
 
-func IntToCord(idx int64) Cord {
+func (w World) IntToCord(idx int64) Cord {
 	var cx int64
 	var cy int64
 
-	if int(idx) <= COL {
+	if int(idx) <= int(w.col) {
 		cx = idx
-	} else if idx%COL == 0 {
-		cx = COL
+	} else if idx%int64(w.col) == 0 {
+		cx = w.col
 	} else {
-		cx = idx % COL
+		cx = idx % w.col
 	}
 
-	if int(idx) <= ROW {
+	if int(idx) <= int(w.row) {
 		cy = 1
-	} else if idx%ROW == 0 {
-		cy = idx / ROW
+	} else if idx%w.row == 0 {
+		cy = idx / w.row
 	} else {
-		cy = idx/ROW + 1
+		cy = idx/w.row + 1
 	}
 
 	return Cord{x: cx, y: cy}
@@ -201,6 +202,6 @@ type Cord struct {
 	y int64
 }
 
-func (c *Cord) CordToInt() int64 {
-	return (c.x-1)%ROW + 1 + ((c.y - 1) * COL)
+func (c *Cord) CordToInt(col int64, row int64) int64 {
+	return (c.x-1)%col + 1 + ((c.y - 1) * row)
 }

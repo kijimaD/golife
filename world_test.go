@@ -22,6 +22,8 @@ func worldSeed() World {
 			NewCell(true),
 			NewCell(false),
 		},
+		row: 3,
+		col: 3,
 	}
 }
 
@@ -182,6 +184,8 @@ func TestCheckDownPos(t *testing.T) {
 }
 
 func TestIntToCord(t *testing.T) {
+	w := worldSeed()
+
 	tests := []struct {
 		input    int64
 		expected Cord
@@ -198,13 +202,15 @@ func TestIntToCord(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		if c := IntToCord(tt.input); c != tt.expected {
+		if c := w.IntToCord(tt.input); c != tt.expected {
 			t.Errorf("%v: %v is not match, expected: %v", tt.input, c, tt.expected)
 		}
 	}
 }
 
 func TestCordToInt(t *testing.T) {
+	w := worldSeed()
+
 	tests := []struct {
 		input    Cord
 		expected int64
@@ -221,7 +227,7 @@ func TestCordToInt(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		if i := tt.input.CordToInt(); i != tt.expected {
+		if i := tt.input.CordToInt(w.col, w.row); i != tt.expected {
 			t.Errorf("%v: %v is not match, expected: %v", tt.input, i, tt.expected)
 		}
 	}
