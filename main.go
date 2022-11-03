@@ -115,7 +115,7 @@ func (w *World) evalScore() *World {
 	for i, c := range w.cells {
 		if c.Score == 3 { // 誕生
 			w.cells[i].IsLive = true
-		} else if c.score == 2 {
+		} else if c.Score == 2 && c.IsLive == true { // 生存
 			w.cells[i].IsLive = true
 		} else if c.Score <= 1 { // 過疎
 			w.cells[i].IsLive = false
