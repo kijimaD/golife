@@ -44,13 +44,15 @@ func main() {
 	}
 
 	world.draw()
+	gen := 0
 
 	for true {
-		fmt.Print("enter: ")
+		fmt.Printf("%d gen: enter\n", gen)
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 
 		world.resetScore().calcScore().evalScore().draw()
+		gen += 1
 	}
 }
 
