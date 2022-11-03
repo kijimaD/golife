@@ -3,47 +3,48 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"golife/world"
 	"os"
 )
 
 func main() {
-	world := &World{
-		row: 5,
-		col: 5,
-		cells: []Cell{
-			NewCell(false),
-			NewCell(false),
-			NewCell(false),
-			NewCell(false),
-			NewCell(false),
+	w := &world.World{
+		Row: 5,
+		Col: 5,
+		Cells: []world.Cell{
+			world.NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
 
-			NewCell(false),
-			NewCell(true),
-			NewCell(true),
-			NewCell(true),
-			NewCell(false),
+			world.NewCell(false),
+			world.NewCell(true),
+			world.NewCell(true),
+			world.NewCell(true),
+			world.NewCell(false),
 
-			NewCell(false),
-			NewCell(false),
-			NewCell(true),
-			NewCell(true),
-			NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
+			world.NewCell(true),
+			world.NewCell(true),
+			world.NewCell(false),
 
-			NewCell(false),
-			NewCell(false),
-			NewCell(false),
-			NewCell(false),
-			NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
 
-			NewCell(false),
-			NewCell(false),
-			NewCell(false),
-			NewCell(false),
-			NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
+			world.NewCell(false),
 		},
 	}
 
-	world.draw()
+	w.Draw()
 	gen := 0
 
 	for true {
@@ -51,7 +52,7 @@ func main() {
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 
-		world.resetScore().calcScore().evalScore().draw()
+		w.ResetScore().CalcScore().EvalScore().Draw()
 		gen += 1
 	}
 }
