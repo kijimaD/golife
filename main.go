@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	world := World{
+	world := &World{
 		row: 5,
 		col: 5,
 		cells: []Cell{
@@ -20,19 +20,19 @@ func main() {
 			NewCell(false),
 			NewCell(true),
 			NewCell(true),
+			NewCell(true),
 			NewCell(false),
+
+			NewCell(false),
+			NewCell(false),
+			NewCell(true),
+			NewCell(true),
 			NewCell(false),
 
 			NewCell(false),
 			NewCell(false),
 			NewCell(false),
 			NewCell(false),
-			NewCell(false),
-
-			NewCell(false),
-			NewCell(true),
-			NewCell(true),
-			NewCell(true),
 			NewCell(false),
 
 			NewCell(false),
@@ -43,25 +43,14 @@ func main() {
 		},
 	}
 
+	world.draw()
+
 	for true {
-		for i, c := range world.cells {
-			if c.IsLive {
-				fmt.Print("●")
-			} else {
-				fmt.Print("○")
-			}
-
-			if (i+1)%int(world.col) == 0 {
-				fmt.Println("")
-			}
-		}
-
-		world.resetScore().calcScore()
-		fmt.Println(world)
 		fmt.Print("enter: ")
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
-		world.evalScore()
+
+		world.resetScore().calcScore().evalScore().draw()
 	}
 }
 
@@ -74,63 +63,63 @@ type World struct {
 
 type Cell struct {
 	IsLive bool
-	score  int
+	Score  int
 }
 
 func NewCell(isLive bool) Cell {
 	return Cell{isLive, 0}
 }
 
-func (w World) calcScore() World {
+func (w *World) calcScore() *World {
 	l := len(w.cells)
 
 	for i, _ := range w.cells {
 		uCellIdx := calcIndex(l, i, -w.col)
 		if w.cells[uCellIdx].IsLive {
-			w.cells[i].score += 1
+			w.cells[i].Score += 1
 		}
 		ruCellIdx := calcIndex(l, i, -w.col+1)
 		if w.cells[ruCellIdx].IsLive {
-			w.cells[i].score += 1
+			w.cells[i].Score += 1
 		}
 		rCellIdx := calcIndex(l, i, 1)
 		if w.cells[rCellIdx].IsLive {
-			w.cells[i].score += 1
+			w.cells[i].Score += 1
 		}
 		rdCellIdx := calcIndex(l, i, w.col+1)
 		if w.cells[rdCellIdx].IsLive {
-			w.cells[i].score += 1
+			w.cells[i].Score += 1
 		}
 		dCellIdx := calcIndex(l, i, w.col)
 		if w.cells[dCellIdx].IsLive {
-			w.cells[i].score += 1
+			w.cells[i].Score += 1
 		}
 		ldCellIdx := calcIndex(l, i, w.col-1)
 		if w.cells[ldCellIdx].IsLive {
-			w.cells[i].score += 1
+			w.cells[i].Score += 1
 		}
 		lCellIdx := calcIndex(l, i, -1)
 		if w.cells[lCellIdx].IsLive {
-			w.cells[i].score += 1
+			w.cells[i].Score += 1
 		}
 		luCellIdx := calcIndex(l, i, -w.col-1)
 		if w.cells[luCellIdx].IsLive {
-			w.cells[i].score += 1
+			w.cells[i].Score += 1
 		}
 	}
 
 	return w
 }
 
-func (w World) evalScore() World {
+func (w *World) evalScore() *World {
 	for i, c := range w.cells {
-		if c.score == 3 {
+		if c.Score == 3 { // 誕生
 			w.cells[i].IsLive = true
 		} else if c.score == 2 {
 			w.cells[i].IsLive = true
-		} else if c.score <= 1 {
+		} else if c.Score <= 1 { // 過疎
 			w.cells[i].IsLive = false
-		} else if c.score >= 4 {
+		} else if c.Score >= 4 { // 過密
 			w.cells[i].IsLive = false
 		}
 	}
@@ -138,15 +127,24 @@ func (w World) evalScore() World {
 	return w
 }
 
-func (w World) resetScore() World {
+func (w *World) resetScore() *World {
 	for i, _ := range w.cells {
-		w.cells[i].score = 0
+		w.cells[i].Score = 0
 	}
-
 	return w
 }
 
-// 引数で渡す
+func (w World) draw() {
+	for i, c := range w.cells {
+		if c.IsLive {
+			fmt.Print("●")
+		} else {
+			fmt.Print("○")
+		}
 
-// 方向関係なく、９つのマスの合計を数える
-// 引数指定にする
+		// 改行
+		if (i+1)%int(w.col) == 0 {
+			fmt.Println("")
+		}
+	}
+}
