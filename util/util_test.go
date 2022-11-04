@@ -72,6 +72,42 @@ func TestPlaneIndexEdge(t *testing.T) {
 	}
 }
 
+func TestPlaneIndexBig(t *testing.T) {
+	// 0  1  2  3  4
+	// 5  6  7  8  9
+	// 10 11 12 13 14
+	// 15 16 17 18 19
+	// 20 21 22 23 24
+
+	// 24からの相対位置指定で、8方向分のインデックスを取得するテスト。
+	cur := 24
+	col := 5
+
+	tests := []struct {
+		iw       int
+		base     int
+		rx       int
+		ry       int
+		expected int
+	}{
+		{col, cur, 0, 0, 24},   // 元の位置
+		{col, cur, 0, -1, 19},  // 上
+		{col, cur, 1, -1, 15},  // 右上
+		{col, cur, 1, 0, 20},   // 右
+		{col, cur, 1, 1, 0},    // 右下
+		{col, cur, 0, 1, 4},    // 下
+		{col, cur, -1, 1, 3},   // 左下
+		{col, cur, -1, 0, 23},  // 左
+		{col, cur, -1, -1, 18}, // 左上
+	}
+
+	for i, tt := range tests {
+		if PlaneIndex(tt.iw, tt.base, tt.rx, tt.ry) != tt.expected {
+			t.Errorf("idx: %d is not match", i)
+		}
+	}
+}
+
 func TestCalcIndex(t *testing.T) {
 	// 0 1 2
 
