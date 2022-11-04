@@ -22,38 +22,36 @@ func NewCell(isLive bool) Cell {
 }
 
 func (w *World) CalcScore() *World {
-	l := len(w.Cells)
-
 	for i, _ := range w.Cells {
-		uCellIdx := util.CalcIndex(l, i, -w.Col)
+		uCellIdx := util.PlaneIndex(w.Col, i, 0, -1)
 		if w.Cells[uCellIdx].IsLive {
 			w.Cells[i].Score += 1
 		}
-		ruCellIdx := util.CalcIndex(l, i, -w.Col+1)
+		ruCellIdx := util.PlaneIndex(w.Col, i, 1, -1)
 		if w.Cells[ruCellIdx].IsLive {
 			w.Cells[i].Score += 1
 		}
-		rCellIdx := util.CalcIndex(l, i, 1)
+		rCellIdx := util.PlaneIndex(w.Col, i, 1, 0)
 		if w.Cells[rCellIdx].IsLive {
 			w.Cells[i].Score += 1
 		}
-		rdCellIdx := util.CalcIndex(l, i, w.Col+1)
+		rdCellIdx := util.PlaneIndex(w.Col, i, 1, 1)
 		if w.Cells[rdCellIdx].IsLive {
 			w.Cells[i].Score += 1
 		}
-		dCellIdx := util.CalcIndex(l, i, w.Col)
+		dCellIdx := util.PlaneIndex(w.Col, i, 0, 1)
 		if w.Cells[dCellIdx].IsLive {
 			w.Cells[i].Score += 1
 		}
-		ldCellIdx := util.CalcIndex(l, i, w.Col-1)
+		ldCellIdx := util.PlaneIndex(w.Col, i, -1, 1)
 		if w.Cells[ldCellIdx].IsLive {
 			w.Cells[i].Score += 1
 		}
-		lCellIdx := util.CalcIndex(l, i, -1)
+		lCellIdx := util.PlaneIndex(w.Col, i, -1, 0)
 		if w.Cells[lCellIdx].IsLive {
 			w.Cells[i].Score += 1
 		}
-		luCellIdx := util.CalcIndex(l, i, -w.Col-1)
+		luCellIdx := util.PlaneIndex(w.Col, i, -1, -1)
 		if w.Cells[luCellIdx].IsLive {
 			w.Cells[i].Score += 1
 		}
@@ -88,9 +86,9 @@ func (w *World) ResetScore() *World {
 func (w World) Draw() {
 	for i, c := range w.Cells {
 		if c.IsLive {
-			fmt.Print("●")
+			fmt.Print("●", c.Score, " ")
 		} else {
-			fmt.Print("○")
+			fmt.Print("○", c.Score, " ")
 		}
 
 		// 改行
