@@ -21,6 +21,19 @@ type Cell struct {
 	Score  int
 }
 
+const (
+	LIVEC  = `●`
+	DEATHC = `○`
+)
+
+func (c Cell) String() string {
+	if c.IsLive {
+		return LIVEC
+	} else {
+		return DEATHC
+	}
+}
+
 func NewCell(isLive bool) Cell {
 	return Cell{isLive, 0}
 }
@@ -124,12 +137,7 @@ func (w *World) ResetScore() *World {
 
 func (w World) Draw() {
 	for i, c := range w.Cells {
-		if c.IsLive {
-			fmt.Print("●")
-		} else {
-			fmt.Print("○")
-		}
-
+		fmt.Print(c.String())
 		// 改行
 		if (i+1)%int(w.Col) == 0 {
 			fmt.Println("")
