@@ -8,41 +8,7 @@ import (
 )
 
 func main() {
-	w := &world.World{
-		Row: 5,
-		Col: 5,
-		Cells: []world.Cell{
-			world.NewCell(false),
-			world.NewCell(false),
-			world.NewCell(false),
-			world.NewCell(false),
-			world.NewCell(false),
-
-			world.NewCell(false),
-			world.NewCell(true),
-			world.NewCell(true),
-			world.NewCell(true),
-			world.NewCell(false),
-
-			world.NewCell(false),
-			world.NewCell(false),
-			world.NewCell(true),
-			world.NewCell(true),
-			world.NewCell(false),
-
-			world.NewCell(false),
-			world.NewCell(false),
-			world.NewCell(false),
-			world.NewCell(false),
-			world.NewCell(false),
-
-			world.NewCell(false),
-			world.NewCell(false),
-			world.NewCell(false),
-			world.NewCell(false),
-			world.NewCell(false),
-		},
-	}
+	w := world.LoadWorld()
 
 	w.Draw()
 	gen := 0

@@ -1,8 +1,12 @@
 package world
 
 import (
+	"bufio"
 	"fmt"
 	"golife/util"
+	"io"
+	"io/ioutil"
+	"os"
 )
 
 // 全体
@@ -19,6 +23,49 @@ type Cell struct {
 
 func NewCell(isLive bool) Cell {
 	return Cell{isLive, 0}
+}
+
+const INPUT_FILE = "world.txt"
+
+func LoadWorld() *World {
+	var row int
+	var col int
+
+	filename := INPUT_FILE
+	f, _ := os.Open(filename)
+
+	bu := bufio.NewReaderSize(f, 1024)
+	for {
+		line, _, err := bu.ReadLine()
+		if err == io.EOF {
+			break
+		}
+		// 最終行の文字長をcolにする
+		col = len([]rune(string(line)))
+		// 行数
+		row += 1
+	}
+	f.Close()
+
+	w := &World{
+		Row: row,
+		Col: col,
+	}
+
+	data, _ := ioutil.ReadFile(filename)
+	for _, c := range string(data) {
+		switch string(c) {
+		case "●":
+			w.Cells = append(w.Cells, NewCell(true))
+		case "○":
+			w.Cells = append(w.Cells, NewCell(false))
+		case "\n":
+		default:
+			fmt.Printf("`%s`は不正な文字です\n", string(c))
+		}
+	}
+
+	return w
 }
 
 func (w *World) CalcScore() *World {
@@ -78,9 +125,9 @@ func (w *World) ResetScore() *World {
 func (w World) Draw() {
 	for i, c := range w.Cells {
 		if c.IsLive {
-			fmt.Print("●", c.Score, " ")
+			fmt.Print("●")
 		} else {
-			fmt.Print("○", c.Score, " ")
+			fmt.Print("○")
 		}
 
 		// 改行
