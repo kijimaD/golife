@@ -23,36 +23,28 @@ func NewCell(isLive bool) Cell {
 
 func (w *World) CalcScore() *World {
 	for i, _ := range w.Cells {
-		uCellIdx := util.PlaneIndex(w.Col, i, 0, -1)
-		if w.Cells[uCellIdx].IsLive {
+		if w.Cells[util.PlaneIndex(w.Col, i, util.Up)].IsLive {
 			w.Cells[i].Score += 1
 		}
-		ruCellIdx := util.PlaneIndex(w.Col, i, 1, -1)
-		if w.Cells[ruCellIdx].IsLive {
+		if w.Cells[util.PlaneIndex(w.Col, i, util.RightUp)].IsLive {
 			w.Cells[i].Score += 1
 		}
-		rCellIdx := util.PlaneIndex(w.Col, i, 1, 0)
-		if w.Cells[rCellIdx].IsLive {
+		if w.Cells[util.PlaneIndex(w.Col, i, util.Right)].IsLive {
 			w.Cells[i].Score += 1
 		}
-		rdCellIdx := util.PlaneIndex(w.Col, i, 1, 1)
-		if w.Cells[rdCellIdx].IsLive {
+		if w.Cells[util.PlaneIndex(w.Col, i, util.RightDown)].IsLive {
 			w.Cells[i].Score += 1
 		}
-		dCellIdx := util.PlaneIndex(w.Col, i, 0, 1)
-		if w.Cells[dCellIdx].IsLive {
+		if w.Cells[util.PlaneIndex(w.Col, i, util.Down)].IsLive {
 			w.Cells[i].Score += 1
 		}
-		ldCellIdx := util.PlaneIndex(w.Col, i, -1, 1)
-		if w.Cells[ldCellIdx].IsLive {
+		if w.Cells[util.PlaneIndex(w.Col, i, util.LeftDown)].IsLive {
 			w.Cells[i].Score += 1
 		}
-		lCellIdx := util.PlaneIndex(w.Col, i, -1, 0)
-		if w.Cells[lCellIdx].IsLive {
+		if w.Cells[util.PlaneIndex(w.Col, i, util.Left)].IsLive {
 			w.Cells[i].Score += 1
 		}
-		luCellIdx := util.PlaneIndex(w.Col, i, -1, -1)
-		if w.Cells[luCellIdx].IsLive {
+		if w.Cells[util.PlaneIndex(w.Col, i, util.LeftUp)].IsLive {
 			w.Cells[i].Score += 1
 		}
 	}
