@@ -13,9 +13,9 @@ const INPUT_FILE = "world.txt"
 
 // 全体
 type World struct {
-	Row   int
-	Col   int
-	Cells []Cell
+	row   int
+	col   int
+	cells []Cell
 }
 
 // TODO: 今はファイルだけ。readerで読み込めるようにする
@@ -38,17 +38,17 @@ func LoadWorld() *World {
 	f.Close()
 
 	w := &World{
-		Row: row,
-		Col: col,
+		row: row,
+		col: col,
 	}
 
 	data, _ := ioutil.ReadFile(INPUT_FILE)
 	for _, c := range string(data) {
 		switch string(c) {
 		case LIVEC:
-			w.Cells = append(w.Cells, NewCell(true))
+			w.cells = append(w.cells, NewCell(true))
 		case DEATHC:
-			w.Cells = append(w.Cells, NewCell(false))
+			w.cells = append(w.cells, NewCell(false))
 		case "\n":
 		default:
 			fmt.Printf("`%s`は不正な文字です\n", string(c))
@@ -59,30 +59,30 @@ func LoadWorld() *World {
 }
 
 func (w *World) CalcScore() *World {
-	for i, _ := range w.Cells {
-		if w.Cells[util.PlaneIndex(w.Col, i, util.Up)].IsLive {
-			w.Cells[i].Score += 1
+	for i, _ := range w.cells {
+		if w.cells[util.PlaneIndex(w.col, i, util.Up)].IsLive {
+			w.cells[i].Score += 1
 		}
-		if w.Cells[util.PlaneIndex(w.Col, i, util.RightUp)].IsLive {
-			w.Cells[i].Score += 1
+		if w.cells[util.PlaneIndex(w.col, i, util.RightUp)].IsLive {
+			w.cells[i].Score += 1
 		}
-		if w.Cells[util.PlaneIndex(w.Col, i, util.Right)].IsLive {
-			w.Cells[i].Score += 1
+		if w.cells[util.PlaneIndex(w.col, i, util.Right)].IsLive {
+			w.cells[i].Score += 1
 		}
-		if w.Cells[util.PlaneIndex(w.Col, i, util.RightDown)].IsLive {
-			w.Cells[i].Score += 1
+		if w.cells[util.PlaneIndex(w.col, i, util.RightDown)].IsLive {
+			w.cells[i].Score += 1
 		}
-		if w.Cells[util.PlaneIndex(w.Col, i, util.Down)].IsLive {
-			w.Cells[i].Score += 1
+		if w.cells[util.PlaneIndex(w.col, i, util.Down)].IsLive {
+			w.cells[i].Score += 1
 		}
-		if w.Cells[util.PlaneIndex(w.Col, i, util.LeftDown)].IsLive {
-			w.Cells[i].Score += 1
+		if w.cells[util.PlaneIndex(w.col, i, util.LeftDown)].IsLive {
+			w.cells[i].Score += 1
 		}
-		if w.Cells[util.PlaneIndex(w.Col, i, util.Left)].IsLive {
-			w.Cells[i].Score += 1
+		if w.cells[util.PlaneIndex(w.col, i, util.Left)].IsLive {
+			w.cells[i].Score += 1
 		}
-		if w.Cells[util.PlaneIndex(w.Col, i, util.LeftUp)].IsLive {
-			w.Cells[i].Score += 1
+		if w.cells[util.PlaneIndex(w.col, i, util.LeftUp)].IsLive {
+			w.cells[i].Score += 1
 		}
 	}
 
@@ -90,15 +90,15 @@ func (w *World) CalcScore() *World {
 }
 
 func (w *World) EvalScore() *World {
-	for i, c := range w.Cells {
+	for i, c := range w.cells {
 		if c.Score == 3 { // 誕生
-			w.Cells[i].IsLive = true
+			w.cells[i].IsLive = true
 		} else if c.Score == 2 && c.IsLive == true { // 生存
-			w.Cells[i].IsLive = true
+			w.cells[i].IsLive = true
 		} else if c.Score <= 1 { // 過疎
-			w.Cells[i].IsLive = false
+			w.cells[i].IsLive = false
 		} else if c.Score >= 4 { // 過密
-			w.Cells[i].IsLive = false
+			w.cells[i].IsLive = false
 		}
 	}
 
@@ -106,17 +106,17 @@ func (w *World) EvalScore() *World {
 }
 
 func (w *World) ResetScore() *World {
-	for i, _ := range w.Cells {
-		w.Cells[i].Score = 0
+	for i, _ := range w.cells {
+		w.cells[i].Score = 0
 	}
 	return w
 }
 
 func (w World) Draw() {
-	for i, c := range w.Cells {
+	for i, c := range w.cells {
 		fmt.Print(c.String())
 		// 改行
-		if (i+1)%int(w.Col) == 0 {
+		if (i+1)%int(w.col) == 0 {
 			fmt.Println("")
 		}
 	}
