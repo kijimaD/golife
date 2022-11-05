@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"golife/config"
 	"golife/world"
 	"os"
 )
@@ -14,8 +15,8 @@ const (
 
 func main() {
 	h := &world.History{}
-	c := world.LoadConfigs()
-	w := world.LoadWorld(c)
+	c := config.Load()
+	w := world.Load(c)
 	h.Worlds = h.CreateHistory(*w, c)
 
 	fmt.Print("[n]ext or [p]rev\n")

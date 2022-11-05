@@ -1,13 +1,10 @@
 package world
 
 import (
-	"bufio"
 	"fmt"
 	"golife/config"
 	"golife/util"
-	"io"
 	"io/ioutil"
-	"os"
 )
 
 const INPUT_FILE = "world.txt"
@@ -18,33 +15,8 @@ type World struct {
 	Configs config.Configs
 }
 
-func LoadConfigs() config.Configs {
-	var row int
-	var col int
-
-	f, _ := os.Open(INPUT_FILE)
-	bu := bufio.NewReaderSize(f, 1024)
-	for {
-		line, _, err := bu.ReadLine()
-		if err == io.EOF {
-			break
-		}
-		// 最終行の文字長をcolとする
-		col = len([]rune(string(line)))
-		// 行数をrowとする
-		row += 1
-	}
-	f.Close()
-
-	return config.Configs{
-		Debug: false,
-		Row:   row,
-		Col:   col,
-	}
-}
-
 // TODO: 今はファイルだけ。readerで読み込めるようにする
-func LoadWorld(c config.Configs) *World {
+func Load(c config.Configs) *World {
 	w := &World{
 		Configs: c,
 	}
