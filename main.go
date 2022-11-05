@@ -2,23 +2,24 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"golife/world"
 	"os"
 )
 
 func main() {
+	h := &world.History{}
 	w := world.LoadWorld()
+	h.Worlds = h.CreateHistory(*w)
 
-	w.Draw()
-	gen := 0
+	i := 0
+	h.Worlds[i].Draw()
+	i += 1
 
-	for true {
-		fmt.Printf("%d gen: enter\n", gen)
+	for {
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 
-		w.ResetScore().CalcScore().EvalScore().Draw()
-		gen += 1
+		h.Worlds[i%5].Draw()
+		i += 1
 	}
 }

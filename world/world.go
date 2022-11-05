@@ -58,7 +58,11 @@ func LoadWorld() *World {
 	return w
 }
 
-func (w *World) CalcScore() *World {
+func (w World) Next() World {
+	return w.ResetScore().CalcScore().EvalScore()
+}
+
+func (w World) CalcScore() World {
 	for i, _ := range w.cells {
 		if w.cells[util.PlaneIndex(w.col, i, util.Up)].IsLive {
 			w.cells[i].Score += 1
@@ -89,7 +93,7 @@ func (w *World) CalcScore() *World {
 	return w
 }
 
-func (w *World) EvalScore() *World {
+func (w World) EvalScore() World {
 	for i, c := range w.cells {
 		if c.Score == 3 { // 誕生
 			w.cells[i].IsLive = true
@@ -105,7 +109,7 @@ func (w *World) EvalScore() *World {
 	return w
 }
 
-func (w *World) ResetScore() *World {
+func (w World) ResetScore() World {
 	for i, _ := range w.cells {
 		w.cells[i].Score = 0
 	}
