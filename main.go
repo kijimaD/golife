@@ -2,8 +2,14 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"golife/world"
 	"os"
+)
+
+const (
+	NEXT_KEY = "n"
+	PREV_KEY = "p"
 )
 
 func main() {
@@ -11,15 +17,26 @@ func main() {
 	w := world.LoadWorld()
 	h.Worlds = h.CreateHistory(*w)
 
+	fmt.Print("[n]ext or [p]rev\n")
 	i := 0
+	fmt.Printf("gen: %d\n", i)
 	h.Worlds[i].Draw()
-	i += 1
 
 	for {
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
+		in := scanner.Text()
 
-		h.Worlds[i%5].Draw()
-		i += 1
+		switch in {
+		case "", NEXT_KEY:
+			i += 1
+		case PREV_KEY:
+			i -= 1
+		default:
+			continue
+		}
+
+		fmt.Printf("gen: %d\n", i)
+		h.Worlds[i%100].Draw()
 	}
 }
