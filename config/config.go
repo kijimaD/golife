@@ -9,9 +9,10 @@ import (
 const INPUT_FILE = "world.txt"
 
 type Configs struct {
-	Debug bool
-	Row   int
-	Col   int
+	Debug  bool
+	Row    int
+	Col    int
+	GenCap int // 計算する世代数
 }
 
 func Load() Configs {
@@ -33,8 +34,9 @@ func Load() Configs {
 	f.Close()
 
 	return Configs{
-		Debug: false,
-		Row:   row,
-		Col:   col,
+		Debug:  false,
+		Row:    row,
+		Col:    col,
+		GenCap: 100, // とりあえず100
 	}
 }

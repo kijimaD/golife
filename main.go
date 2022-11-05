@@ -39,6 +39,6 @@ func main() {
 		}
 
 		fmt.Printf("gen: %d\n", i)
-		h.Worlds[i%100].Draw()
+		h.Worlds[i%c.GenCap].Draw()
 	}
 }

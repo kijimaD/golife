@@ -23,8 +23,7 @@ func (h History) CreateHistory(initialWorld World, c config.Configs) []World {
 	}
 	worlds = append(worlds, cp)
 
-	// とりあえず100ループ
-	for i := 0; i < 100; i++ {
+	for i := 0; i < c.GenCap; i++ {
 		w = w.Next()
 		cells := make([]Cell, len(w.cells))
 		copy(cells, w.cells)
