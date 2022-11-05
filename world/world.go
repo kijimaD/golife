@@ -23,9 +23,7 @@ func LoadWorld() *World {
 	var row int
 	var col int
 
-	filename := INPUT_FILE
-	f, _ := os.Open(filename)
-
+	f, _ := os.Open(INPUT_FILE)
 	bu := bufio.NewReaderSize(f, 1024)
 	for {
 		line, _, err := bu.ReadLine()
@@ -44,7 +42,7 @@ func LoadWorld() *World {
 		Col: col,
 	}
 
-	data, _ := ioutil.ReadFile(filename)
+	data, _ := ioutil.ReadFile(INPUT_FILE)
 	for _, c := range string(data) {
 		switch string(c) {
 		case LIVEC:
