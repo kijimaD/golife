@@ -9,6 +9,8 @@ import (
 	"os"
 )
 
+const INPUT_FILE = "world.txt"
+
 // 全体
 type World struct {
 	Row   int
@@ -16,30 +18,7 @@ type World struct {
 	Cells []Cell
 }
 
-type Cell struct {
-	IsLive bool
-	Score  int
-}
-
-const (
-	LIVEC  = `●`
-	DEATHC = `○`
-)
-
-func (c Cell) String() string {
-	if c.IsLive {
-		return LIVEC
-	} else {
-		return DEATHC
-	}
-}
-
-func NewCell(isLive bool) Cell {
-	return Cell{isLive, 0}
-}
-
-const INPUT_FILE = "world.txt"
-
+// TODO: 今はファイルだけ。readerで読み込めるようにする
 func LoadWorld() *World {
 	var row int
 	var col int
@@ -53,9 +32,9 @@ func LoadWorld() *World {
 		if err == io.EOF {
 			break
 		}
-		// 最終行の文字長をcolにする
+		// 最終行の文字長をcolとする
 		col = len([]rune(string(line)))
-		// 行数
+		// 行数をrowとする
 		row += 1
 	}
 	f.Close()
@@ -68,9 +47,9 @@ func LoadWorld() *World {
 	data, _ := ioutil.ReadFile(filename)
 	for _, c := range string(data) {
 		switch string(c) {
-		case "●":
+		case LIVEC:
 			w.Cells = append(w.Cells, NewCell(true))
-		case "○":
+		case DEATHC:
 			w.Cells = append(w.Cells, NewCell(false))
 		case "\n":
 		default:
