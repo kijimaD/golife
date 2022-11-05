@@ -1,10 +1,14 @@
 package world
 
+import (
+	"golife/config"
+)
+
 type History struct {
 	Worlds []World
 }
 
-func (h History) CreateHistory(initialWorld World) []World {
+func (h History) CreateHistory(initialWorld World, c config.Configs) []World {
 	var worlds []World
 	var w World
 	w = initialWorld
@@ -14,9 +18,8 @@ func (h History) CreateHistory(initialWorld World) []World {
 	cells := make([]Cell, len(w.cells))
 	copy(cells, w.cells)
 	cp := World{
-		col:   w.col,
-		row:   w.row,
-		cells: cells,
+		cells:   cells,
+		Configs: c,
 	}
 	worlds = append(worlds, cp)
 
@@ -26,9 +29,8 @@ func (h History) CreateHistory(initialWorld World) []World {
 		cells := make([]Cell, len(w.cells))
 		copy(cells, w.cells)
 		cp := World{
-			col:   w.col,
-			row:   w.row,
-			cells: cells,
+			cells:   cells,
+			Configs: c,
 		}
 		worlds = append(worlds, cp)
 	}

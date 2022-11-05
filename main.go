@@ -14,8 +14,9 @@ const (
 
 func main() {
 	h := &world.History{}
-	w := world.LoadWorld()
-	h.Worlds = h.CreateHistory(*w)
+	c := world.LoadConfigs()
+	w := world.LoadWorld(c)
+	h.Worlds = h.CreateHistory(*w, c)
 
 	fmt.Print("[n]ext or [p]rev\n")
 	i := 0

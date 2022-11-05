@@ -1,6 +1,7 @@
 package world
 
 import (
+	"golife/config"
 	"testing"
 )
 
@@ -42,8 +43,10 @@ func worldSeed() *World {
 			NewCell(false),
 			NewCell(false),
 		},
-		row: 5,
-		col: 5,
+		Configs: config.Configs{
+			Row: 5,
+			Col: 5,
+		},
 	}
 }
 
