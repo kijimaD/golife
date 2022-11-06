@@ -114,6 +114,17 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
 
+      - name: deploy heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+        run: |
+          heroku container:login
+          docker pull ghcr.io/kijimad/golife_heroku:latest
+          docker tag ghcr.io/kijimad/golife_heroku:latest registry.heroku.com/kd-golife/web
+          docker push registry.heroku.com/kd-golife/web
+          heroku container:release web -a=kd-golife
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
