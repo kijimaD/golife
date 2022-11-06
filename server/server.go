@@ -8,10 +8,11 @@ import (
 	"golife/config"
 	"golife/world"
 	"net/http"
+	"os"
 )
 
 const (
-	PORT = ":8888"
+	DEFAULT_PORT = "8888"
 )
 
 func Run() {
@@ -22,7 +23,13 @@ func Run() {
 	e.GET("/health", health)
 	e.POST("/world/create", createWorld)
 
-	e.Logger.Fatal(e.Start(PORT))
+	port := os.Getenv("PORT")
+	if len(port) == 0 {
+		port = DEFAULT_PORT
+	}
+	port = fmt.Sprintf(":%s", port)
+
+	e.Logger.Fatal(e.Start(port))
 }
 
 func health(c echo.Context) error {
