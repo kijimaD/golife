@@ -2,7 +2,11 @@ package server
 
 import (
 	// "github.com/labstack/echo/middleware"
+	"encoding/json"
+	"fmt"
 	"github.com/labstack/echo/v4"
+	"golife/config"
+	"golife/world"
 	"net/http"
 )
 
@@ -26,6 +30,16 @@ func health(c echo.Context) error {
 }
 
 // curl -X POST http://localhost:8888/world/create
-func createWorld(c echo.Context) error {
-	return c.String(http.StatusOK, "未実装")
+func createWorld(con echo.Context) error {
+	h := &world.History{}
+	c := config.Load()
+	initialWorld := world.Load(c)
+	h.Worlds = h.CreateHistory(*initialWorld, c)
+
+	jsonData, err := json.Marshal(h.Worlds)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return con.String(http.StatusOK, fmt.Sprintf("%s", jsonData))
 }
