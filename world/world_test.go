@@ -1,6 +1,7 @@
 package world
 
 import (
+	"golife/config"
 	"testing"
 )
 
@@ -11,7 +12,7 @@ func worldSeed() *World {
 	// ○○●○○
 	// ○○○○○
 	return &World{
-		Cells: []Cell{
+		cells: []Cell{
 			NewCell(false),
 			NewCell(false),
 			NewCell(false),
@@ -42,8 +43,10 @@ func worldSeed() *World {
 			NewCell(false),
 			NewCell(false),
 		},
-		Row: 5,
-		Col: 5,
+		Configs: config.Configs{
+			Row: 5,
+			Col: 5,
+		},
 	}
 }
 
@@ -87,8 +90,8 @@ func TestCalcScore(t *testing.T) {
 	w.CalcScore()
 
 	for i, tt := range tests {
-		if w.Cells[i].Score != tt.expected {
-			t.Errorf("input: %v is not match. returned: %d, expected: %d", i, w.Cells[i].Score, tt.expected)
+		if w.cells[i].Score != tt.expected {
+			t.Errorf("input: %v is not match. returned: %d, expected: %d", i, w.cells[i].Score, tt.expected)
 		}
 	}
 }
@@ -115,7 +118,7 @@ func TestResetScore(t *testing.T) {
 	w.ResetScore()
 
 	for i, tt := range tests {
-		if w.Cells[i].Score != tt.expected {
+		if w.cells[i].Score != tt.expected {
 			t.Errorf("input: %v is not match", i)
 		}
 	}
