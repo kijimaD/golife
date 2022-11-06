@@ -20,7 +20,7 @@ func Run() {
 	// e.Use(middleware.Logger())
 	// e.Use(middleware.Recover())
 
-	e.GET("/health", health)
+	e.GET("/", root)
 	e.POST("/world/create", createWorld)
 
 	port := os.Getenv("PORT")
@@ -32,8 +32,8 @@ func Run() {
 	e.Logger.Fatal(e.Start(port))
 }
 
-func health(c echo.Context) error {
-	return c.String(http.StatusOK, "ok")
+func root(c echo.Context) error {
+	return c.String(http.StatusOK, "Hi, this is golife API server. https://github.com/kijimaD/golife")
 }
 
 // curl -X POST http://localhost:8888/world/create
