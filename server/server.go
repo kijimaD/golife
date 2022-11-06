@@ -36,7 +36,7 @@ func createWorld(con echo.Context) error {
 	initialWorld := world.Load(c)
 	h.Worlds = h.CreateHistory(*initialWorld, c)
 
-	jsonData, err := json.Marshal(h.Worlds)
+	jsonData, err := json.Marshal(h)
 	if err != nil {
 		fmt.Println(err)
 	}

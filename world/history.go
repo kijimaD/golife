@@ -19,7 +19,7 @@ func (h History) CreateHistory(initialWorld World, c config.Configs) []World {
 	copy(cells, w.Cells)
 	cp := World{
 		Cells:   cells,
-		Configs: c,
+		configs: c,
 	}
 	worlds = append(worlds, cp)
 
@@ -29,7 +29,7 @@ func (h History) CreateHistory(initialWorld World, c config.Configs) []World {
 		copy(cells, w.Cells)
 		cp := World{
 			Cells:   cells,
-			Configs: c,
+			configs: c,
 		}
 		worlds = append(worlds, cp)
 	}
