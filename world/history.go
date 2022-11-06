@@ -15,21 +15,21 @@ func (h History) CreateHistory(initialWorld World, c config.Configs) []World {
 
 	// 初期状態
 	// コピーしてリストに入れる
-	cells := make([]Cell, len(w.cells))
-	copy(cells, w.cells)
+	cells := make([]Cell, len(w.Cells))
+	copy(cells, w.Cells)
 	cp := World{
-		cells:   cells,
-		Configs: c,
+		Cells:   cells,
+		configs: c,
 	}
 	worlds = append(worlds, cp)
 
 	for i := 0; i < c.GenCap; i++ {
 		w = w.Next()
-		cells := make([]Cell, len(w.cells))
-		copy(cells, w.cells)
+		cells := make([]Cell, len(w.Cells))
+		copy(cells, w.Cells)
 		cp := World{
-			cells:   cells,
-			Configs: c,
+			Cells:   cells,
+			configs: c,
 		}
 		worlds = append(worlds, cp)
 	}
