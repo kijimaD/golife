@@ -21,45 +21,9 @@ https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%8
 #+end_quote
 
 ** 使い方
-#+begin_src go
-go run main.go
-#+end_src
-
-#+begin_src
-○○○○○
-○●●●○
-○○●●○
-○○○○○
-○○○○○
-0 gen: enter
-
-○○●○○
-○●○●○
-○●○●○
-○○○○○
-○○○○○
-1 gen: enter
-
-○○●○○
-○●○●○
-○○○○○
-○○○○○
-○○○○○
-2 gen: enter
-
-○○●○○
-○○●○○
-○○○○○
-○○○○○
-○○○○○
-3 gen: enter
-
-○○○○○
-○○○○○
-○○○○○
-○○○○○
-○○○○○
-4 gen: enter
+#+begin_src shell
+  $ go run main.go cli     // ターミナルでライフゲームをプレイする
+  $ go run main.go server  // ライフゲームのAPIサーバを起動する
 #+end_src
 ** todo
 - マップを設定できるようにする
