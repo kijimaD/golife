@@ -2,6 +2,8 @@ package config
 
 import (
 	"bufio"
+	"bytes"
+	"fmt"
 	"github.com/go-yaml/yaml"
 	"github.com/labstack/echo/v4"
 	"io"
@@ -44,16 +46,15 @@ func CLILoad() Configs {
 func ServerLoad(con echo.Context) Configs {
 	c := new()
 
-	// 暫定でファイルから
-	f, _ := os.Open(INPUT_FILE)
-	defer f.Close()
-	bu := bufio.NewReaderSize(f, 1024)
+	buf := bytes.NewBufferString(con.FormValue("InitialWorld"))
+	c.loadSize(buf)
 
-	c.loadSize(bu)
-	c.GenCap, _ = strconv.Atoi(con.FormValue("GenCap"))
+	var err error
+	c.GenCap, err = strconv.Atoi(con.FormValue("GenCap"))
+	if err != nil {
+		fmt.Println("convert str->int failed!")
+	}
 	c.Debug = con.FormValue("Debug") == "true"
-
-	// c.loadReq()
 
 	return *c
 }
@@ -63,6 +64,7 @@ func (c *Configs) loadSize(r io.Reader) *Configs {
 	var row int
 	var col int
 
+	// 1行ずつ読み込みたいからこうしたけど、正しい方法なのかはわからない
 	bu := bufio.NewReaderSize(r, 1024)
 	for {
 		line, _, err := bu.ReadLine()

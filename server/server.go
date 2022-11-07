@@ -7,7 +7,6 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"golife/config"
 	"golife/world"
-	"io/ioutil"
 	"net/http"
 	"os"
 )
@@ -38,16 +37,12 @@ func root(c echo.Context) error {
 	return c.String(http.StatusOK, "Hi, this is golife API server. https://github.com/kijimaD/golife")
 }
 
-// curl -X POST http://localhost:8888/world/create
+// curl -X POST -d $'Debug=true&GenCap=0&InitialWorld=●○○\n○○○\n○○○' http://localhost:8888/world/create
 func createWorld(con echo.Context) error {
 	h := &world.History{}
 	c := config.ServerLoad(con)
 
-	// とりあえずファイル読み込み
-	// リクエストから取るようにする○
-	data, _ := ioutil.ReadFile(INPUT_FILE)
-	initialWorld := world.Load(c, string(data))
-
+	initialWorld := world.Load(c, con.FormValue("InitialWorld"))
 	h.Worlds = h.CreateHistory(*initialWorld, c)
 
 	json, err := json.Marshal(h)
