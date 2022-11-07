@@ -11,5 +11,16 @@ services:
       PORT: 8888
     volumes:
       - .:/build
-    command:  bash -c "air server"
     working_dir: /build
+    command: bash -c "air server"
+
+  front:
+    image: node:19-buster
+    ports:
+      - 7777:7777
+    environment:
+      PORT: 7777
+    volumes:
+      - ./front:/home
+    working_dir: /home
+    command: npm run start
