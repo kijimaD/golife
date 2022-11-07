@@ -34,8 +34,17 @@ https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%8
 
 ** development
 #+begin_src shell
-$ air server
+$ docker-compose up
 #+end_src
+
+APIサーバ
+http://kd-golife.herokuapp.com/
+
+ゲーム開始エンドポイント
+#+begin_src shell
+curl -X POST http://kd-golife.herokuapp.com/world/create
+#+end_src
+
 ** memo
 - 座標をループにする。トーラス
   - 系を閉にできる。資源、シンプル、ゲーム性
