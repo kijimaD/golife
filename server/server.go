@@ -38,6 +38,7 @@ func root(c echo.Context) error {
 }
 
 // curl -X POST -d $'Debug=true&GenCap=0&InitialWorld=●○○\n○○○\n○○○' http://localhost:8888/world/create
+// curl -X POST -d $'Debug=true&GenCap=1&InitialWorld=●●○\n○○○\n○○○' http://kd-golife.herokuapp.com/world/create
 func createWorld(con echo.Context) error {
 	h := &world.History{}
 	c := config.ServerLoad(con)

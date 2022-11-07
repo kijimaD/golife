@@ -40,28 +40,28 @@ func (w World) Next() World {
 func (w World) calcScore() World {
 	for i, _ := range w.Cells {
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.Up)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.RightUp)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.Right)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.RightDown)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.Down)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.LeftDown)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.Left)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.LeftUp)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 	}
 
@@ -70,13 +70,13 @@ func (w World) calcScore() World {
 
 func (w World) evalScore() World {
 	for i, c := range w.Cells {
-		if c.Score == 3 { // 誕生
+		if c.score == 3 { // 誕生
 			w.Cells[i].IsLive = true
-		} else if c.Score == 2 && c.IsLive == true { // 生存
+		} else if c.score == 2 && c.IsLive == true { // 生存
 			w.Cells[i].IsLive = true
-		} else if c.Score <= 1 { // 過疎
+		} else if c.score <= 1 { // 過疎
 			w.Cells[i].IsLive = false
-		} else if c.Score >= 4 { // 過密
+		} else if c.score >= 4 { // 過密
 			w.Cells[i].IsLive = false
 		}
 	}
@@ -86,7 +86,7 @@ func (w World) evalScore() World {
 
 func (w World) resetScore() World {
 	for i, _ := range w.Cells {
-		w.Cells[i].Score = 0
+		w.Cells[i].score = 0
 	}
 	return w
 }
