@@ -24,6 +24,7 @@ RUN GO111MODULE=on CGO_ENABLED=0 go build \
 FROM golang:1.19-buster AS release
 COPY --from=builder /build/bin/golife /bin/
 COPY --from=builder /build/world.txt /workdir/world.txt
+COPY --from=builder /build/.golife.yml /workdir/.golife.yml
 WORKDIR /workdir
 CMD ["golife", "cli"]
 
@@ -34,8 +35,6 @@ CMD ["golife", "cli"]
 
 FROM golang:1.19-buster as heroku
 COPY --from=builder /build/bin/golife /bin/
- # まだ初期ワールドをファイルから読み取ってるので必要
-COPY --from=builder /build/world.txt /workdir/world.txt
 WORKDIR /workdir
 # herokuではportが変動するため、合わせる必要がある
 CMD PORT=$PORT golife server
