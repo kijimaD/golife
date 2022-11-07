@@ -30,7 +30,6 @@ func new() *Configs {
 
 // CLIモードでは設定ファイル(.yml)と入力ファイル(.txt)からConfigsを生成する。
 func CLILoad() Configs {
-	// configsをここでinitして、各メソッドで読み込む方式にする
 	c := new()
 
 	f, _ := os.Open(INPUT_FILE)

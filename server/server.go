@@ -7,12 +7,14 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"golife/config"
 	"golife/world"
+	"io/ioutil"
 	"net/http"
 	"os"
 )
 
 const (
 	DEFAULT_PORT = "8888"
+	INPUT_FILE   = "world.txt"
 )
 
 func Run() {
@@ -40,7 +42,12 @@ func root(c echo.Context) error {
 func createWorld(con echo.Context) error {
 	h := &world.History{}
 	c := config.ServerLoad(con)
-	initialWorld := world.Load(c)
+
+	// とりあえずファイル読み込み
+	// リクエストから取るようにする○
+	data, _ := ioutil.ReadFile(INPUT_FILE)
+	initialWorld := world.Load(c, string(data))
+
 	h.Worlds = h.CreateHistory(*initialWorld, c)
 
 	json, err := json.Marshal(h)

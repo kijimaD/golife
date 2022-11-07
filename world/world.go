@@ -4,10 +4,7 @@ import (
 	"fmt"
 	"golife/config"
 	"golife/util"
-	"io/ioutil"
 )
-
-const INPUT_FILE = "world.txt"
 
 // 全体
 type World struct {
@@ -15,15 +12,13 @@ type World struct {
 	configs config.Configs
 }
 
-// TODO: 今はファイルだけ。Readerで読み込めるようにする
 // 外部入力から初期世界を生成する
-func Load(c config.Configs) *World {
+func Load(c config.Configs, s string) *World {
 	w := &World{
 		configs: c,
 	}
 
-	data, _ := ioutil.ReadFile(INPUT_FILE)
-	for _, rune := range string(data) {
+	for _, rune := range s {
 		switch string(rune) {
 		case LIVEC:
 			w.Cells = append(w.Cells, NewCell(true))
