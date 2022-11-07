@@ -3,8 +3,10 @@ package config
 import (
 	"bufio"
 	"github.com/go-yaml/yaml"
+	"github.com/labstack/echo/v4"
 	"io"
 	"os"
+	"strconv"
 )
 
 const INPUT_FILE = "world.txt"
@@ -40,8 +42,7 @@ func CLILoad() Configs {
 }
 
 // APIモードではリクエストからConfigsを生成する。
-// TODO: 未実装
-func ServerLoad() Configs {
+func ServerLoad(con echo.Context) Configs {
 	c := new()
 
 	// 暫定でファイルから
@@ -50,6 +51,9 @@ func ServerLoad() Configs {
 	bu := bufio.NewReaderSize(f, 1024)
 
 	c.loadSize(bu)
+	c.GenCap, _ = strconv.Atoi(con.FormValue("GenCap"))
+	c.Debug = con.FormValue("Debug") == "true"
+
 	// c.loadReq()
 
 	return *c

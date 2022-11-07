@@ -1,10 +1,10 @@
 package server
 
 import (
-	// "github.com/labstack/echo/middleware"
 	"encoding/json"
 	"fmt"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"golife/config"
 	"golife/world"
 	"net/http"
@@ -17,8 +17,8 @@ const (
 
 func Run() {
 	e := echo.New()
-	// e.Use(middleware.Logger())
-	// e.Use(middleware.Recover())
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 
 	e.GET("/", root)
 	e.POST("/world/create", createWorld)
@@ -39,14 +39,14 @@ func root(c echo.Context) error {
 // curl -X POST http://localhost:8888/world/create
 func createWorld(con echo.Context) error {
 	h := &world.History{}
-	c := config.ServerLoad()
+	c := config.ServerLoad(con)
 	initialWorld := world.Load(c)
 	h.Worlds = h.CreateHistory(*initialWorld, c)
 
-	jsonData, err := json.Marshal(h)
+	json, err := json.Marshal(h)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	return con.String(http.StatusOK, fmt.Sprintf("%s", jsonData))
+	return con.String(http.StatusOK, fmt.Sprintf("%s", json))
 }
