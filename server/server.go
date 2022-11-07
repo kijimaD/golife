@@ -39,7 +39,7 @@ func root(c echo.Context) error {
 // curl -X POST http://localhost:8888/world/create
 func createWorld(con echo.Context) error {
 	h := &world.History{}
-	c := config.Load()
+	c := config.ServerLoad()
 	initialWorld := world.Load(c)
 	h.Worlds = h.CreateHistory(*initialWorld, c)
 

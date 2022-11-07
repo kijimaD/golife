@@ -17,7 +17,7 @@ const (
 
 func Run() {
 	h := &world.History{}
-	c := config.Load()
+	c := config.CLILoad()
 	w := world.Load(c)
 	h.Worlds = h.CreateHistory(*w, c)
 
