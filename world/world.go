@@ -4,10 +4,7 @@ import (
 	"fmt"
 	"golife/config"
 	"golife/util"
-	"io/ioutil"
 )
-
-const INPUT_FILE = "world.txt"
 
 // 全体
 type World struct {
@@ -15,15 +12,13 @@ type World struct {
 	configs config.Configs
 }
 
-// TODO: 今はファイルだけ。Readerで読み込めるようにする
 // 外部入力から初期世界を生成する
-func Load(c config.Configs) *World {
+func Load(c config.Configs, s string) *World {
 	w := &World{
 		configs: c,
 	}
 
-	data, _ := ioutil.ReadFile(INPUT_FILE)
-	for _, rune := range string(data) {
+	for _, rune := range s {
 		switch string(rune) {
 		case LIVEC:
 			w.Cells = append(w.Cells, NewCell(true))
@@ -45,28 +40,28 @@ func (w World) Next() World {
 func (w World) calcScore() World {
 	for i, _ := range w.Cells {
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.Up)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.RightUp)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.Right)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.RightDown)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.Down)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.LeftDown)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.Left)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 		if w.Cells[util.PlaneIndex(w.configs.Col, i, util.LeftUp)].IsLive {
-			w.Cells[i].Score += 1
+			w.Cells[i].score += 1
 		}
 	}
 
@@ -75,13 +70,13 @@ func (w World) calcScore() World {
 
 func (w World) evalScore() World {
 	for i, c := range w.Cells {
-		if c.Score == 3 { // 誕生
+		if c.score == 3 { // 誕生
 			w.Cells[i].IsLive = true
-		} else if c.Score == 2 && c.IsLive == true { // 生存
+		} else if c.score == 2 && c.IsLive == true { // 生存
 			w.Cells[i].IsLive = true
-		} else if c.Score <= 1 { // 過疎
+		} else if c.score <= 1 { // 過疎
 			w.Cells[i].IsLive = false
-		} else if c.Score >= 4 { // 過密
+		} else if c.score >= 4 { // 過密
 			w.Cells[i].IsLive = false
 		}
 	}
@@ -91,7 +86,7 @@ func (w World) evalScore() World {
 
 func (w World) resetScore() World {
 	for i, _ := range w.Cells {
-		w.Cells[i].Score = 0
+		w.Cells[i].score = 0
 	}
 	return w
 }

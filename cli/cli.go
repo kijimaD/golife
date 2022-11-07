@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"golife/config"
 	"golife/world"
+	"io/ioutil"
 	"os"
 )
 
@@ -15,10 +16,14 @@ const (
 	PREV_KEY = "p"
 )
 
+const INPUT_FILE = "world.txt"
+
 func Run() {
 	h := &world.History{}
-	c := config.Load()
-	w := world.Load(c)
+	c := config.CLILoad()
+
+	data, _ := ioutil.ReadFile(INPUT_FILE)
+	w := world.Load(c, string(data))
 	h.Worlds = h.CreateHistory(*w, c)
 
 	fmt.Print("[n]ext or [p]rev\n")

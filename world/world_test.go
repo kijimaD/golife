@@ -90,8 +90,8 @@ func TestCalcScore(t *testing.T) {
 	w.calcScore()
 
 	for i, tt := range tests {
-		if w.Cells[i].Score != tt.expected {
-			t.Errorf("input: %v is not match. returned: %d, expected: %d", i, w.Cells[i].Score, tt.expected)
+		if w.Cells[i].score != tt.expected {
+			t.Errorf("input: %v is not match. returned: %d, expected: %d", i, w.Cells[i].score, tt.expected)
 		}
 	}
 }
@@ -118,7 +118,7 @@ func TestResetScore(t *testing.T) {
 	w.resetScore()
 
 	for i, tt := range tests {
-		if w.Cells[i].Score != tt.expected {
+		if w.Cells[i].score != tt.expected {
 			t.Errorf("input: %v is not match", i)
 		}
 	}

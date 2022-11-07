@@ -7,7 +7,7 @@ const (
 
 type Cell struct {
 	IsLive bool
-	Score  int
+	score  int
 }
 
 func (c Cell) String() string {
