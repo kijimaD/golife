@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "./rms.png";
 import "./App.css";
+import ApiFetch from "./Fetch";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <input type="number" value="20" />
         <label className="App-lb">🚀</label>
         <input type="submit" />
+        <ApiFetch />
       </form>
     </div>
   );

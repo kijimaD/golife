@@ -20,6 +20,8 @@ func Run() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
+	// e.Use(middleware.BodyDump(func(c echo.Context, reqBody, resBody []byte) {}))
 
 	e.GET("/", root)
 	e.POST("/world/create", createWorld)
