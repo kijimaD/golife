@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "./rms.png";
+import tomato from "./tomato.png";
 import "./App.css";
 import ApiFetch from "./Fetch";
 
@@ -8,6 +9,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="" alt="logo" />
+        <img src={tomato} className="App-logo" />
+        <img src={tomato} className="App-logo" />
+        <img src={tomato} className="App-logo" />
         <h2>
           <a
             className="App-link"
@@ -25,10 +29,10 @@ function App() {
       <form>
         <label className="App-lb">初期世界</label>
         <textarea className="App-textarea" defaultValue="●○○&#13;○●○&#13;○●○" />
-        <label className="App-lb">世代数</label>
+        <label className="App-lb">生成数</label>
         <input type="number" value="20" />
-        <label className="App-lb">🚀</label>
-        <input type="submit" />
+        <label className="App-lb"></label>
+        <input type="submit" value="🚀創造" />
         <ApiFetch />
       </form>
     </div>

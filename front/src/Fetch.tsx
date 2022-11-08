@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 
 const ApiFetch = () => {
   var form = new FormData();
+  // ここをフォームから取ってくる
   form.append("Debug", "true");
   form.append("GenCap", "3");
-  form.append("InitialWorld", "●●○\n○○○\n○○○");
+  form.append("InitialWorld", "●○○\n○●○\n○○○");
 
-  const [worlds, setWorld] = useState([]);
+  const [worlds, setWorlds] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:8888/world/create", {
@@ -15,19 +16,20 @@ const ApiFetch = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.Worlds);
-        setWorld(data.Worlds);
+        setWorlds(data.Worlds);
       });
   }, []);
 
-  worlds.map((world) => console.log(world["Cells"]));
+  const LIVECHAR = "●";
+  const DEADCHAR = "○";
 
   return (
     <div>
-      {worlds.map((world: any) => (
+      {worlds.map((world: any, i) => (
         <ul>
-          {world["Cells"].map((cell: any) => (
-            <li>{cell["IsLive"]}</li>
+          <li>{i}</li>
+          {world["Cells"].map((cell: any, j: number) => (
+            <span>{cell["IsLive"] ? LIVECHAR : DEADCHAR}</span>
           ))}
         </ul>
       ))}
