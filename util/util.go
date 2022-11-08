@@ -44,7 +44,7 @@ func PlaneIndex(w int, i int, r coord) int {
 
 // ほんとはserverに置きたいけど、serverと循環参照が起きてしまうのでここに置くことにした...
 type CreateWorldParams struct {
-	InitialWorld string `form:"InitialWorld"`
-	GenCap       int    `form:"GenCap"`
+	InitialWorld string `form:"InitialWorld"` // 文字数制限したい
+	GenCap       int    `form:"GenCap" validate:"lt=1000"`
 	Debug        bool   `form:"Debug"`
 }
