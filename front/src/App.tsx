@@ -83,21 +83,19 @@ function App() {
         </p>
       </header>
 
-      <li>世界の縦横の幅が同じでないとバグる</li>
-
       <form>
+        <label className="App-lb"></label>
+        <button onClick={handleSubmit} className="App-submit">
+          🚀創造
+        </button>
+        <label className="App-lb">生成数</label>
+        <input ref={genRef} type="number" defaultValue="100" />
         <label className="App-lb">初期世界 ●=生きている ○=死んでいる</label>
         <textarea
           ref={worldRef}
           className="App-textarea"
           defaultValue="○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○●○●○○○○○○○○&#13;○○○○○○○○○○●●●○○○○○○○&#13;○○○○○○○○○●○●○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○●○○○○○○○○&#13;○○○○○○○○○○○○●○○○○○○○&#13;○○○○○○○○○○○○○●○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○"
         />
-        <label className="App-lb">生成数</label>
-        <input ref={genRef} type="number" defaultValue="100" />
-        <label className="App-lb"></label>
-        <form>
-          <button onClick={handleSubmit}>🚀創造</button>
-        </form>
         {history &&
           history.Worlds.map((world: World, i: number) => (
             <ul>

@@ -19,6 +19,16 @@
   display: block;
 }
 
+.App-submit {
+  display: block;
+  min-width: 80vw;
+  background-color: grey;
+}
+
+.App-submit:hover {
+  background-color: white;
+}
+
 /* 盤面を正方形に近づける */
 span.Stage {
   margin: 0 3px;
