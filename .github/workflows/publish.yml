@@ -15,7 +15,7 @@ jobs:
         run: |
           cd ./front && \
           npm install && \
-          npm run build
+          npm run production
 
       - name: Check
         run: ls -al ./front/build
