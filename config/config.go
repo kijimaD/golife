@@ -52,7 +52,7 @@ func ServerLoad(con echo.Context) Configs {
 	var err error
 	c.GenCap, err = strconv.Atoi(con.FormValue("GenCap"))
 	if err != nil {
-		fmt.Println("convert str->int failed!")
+		fmt.Printf("convert str->int failed! original value: %s", con.FormValue("GenCap"))
 	}
 	c.Debug = con.FormValue("Debug") == "true"
 

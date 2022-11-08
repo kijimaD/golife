@@ -1,4 +1,4 @@
-name: Publish to GHP
+name: 🚀Publish to GHP
 
 on:
   workflow_dispatch:
