@@ -1,19 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./rms.png";
 import tomato from "./tomato.png";
 import "./App.css";
-import ApiFetch from "./Fetch";
 
 function App() {
   const worldRef = React.createRef<HTMLTextAreaElement>();
   const genRef = React.createRef<HTMLInputElement>();
 
+  type Cell = {
+    IsLive: boolean;
+  };
+
+  type World = {
+    Cells: Cell[];
+  };
+
+  type Config = {
+    Debug: boolean;
+    GenCap: number;
+    Row: number;
+    Col: number;
+  };
+
+  type History = {
+    Worlds: World[];
+    Configs: Config;
+  };
+
+  const [history, setHistory] = useState<History>();
+  const FETCH_URL = "http://localhost:8888/world/create";
+
   function handleSubmit(e: any) {
     e.preventDefault();
-    console.log("test world", worldRef.current?.value);
-    console.log("test gen", genRef.current?.value);
-    // refをもとにfetchしたい
+
+    var form = new FormData();
+    form.append("Debug", "true");
+    if (worldRef.current) {
+      form.append("InitialWorld", worldRef.current.value);
+    }
+    if (genRef.current) {
+      form.append("GenCap", genRef.current.value);
+    }
+
+    fetch(FETCH_URL, {
+      method: "POST",
+      body: form,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setHistory(data);
+      });
   }
+
+  const LIVECHAR = "●";
+  const DEADCHAR = "○";
 
   return (
     <div className="App">
@@ -36,8 +76,9 @@ function App() {
           これはトップページです。↓で渡された初期状態に基づいて、各世代の世界を返します。
         </p>
       </header>
+
       <form>
-        <label className="App-lb">初期世界</label>
+        <label className="App-lb">初期世界 ●=生きている ○=死んでいる</label>
         <textarea
           ref={worldRef}
           className="App-textarea"
@@ -49,7 +90,22 @@ function App() {
         <form>
           <button onClick={handleSubmit}>🚀創造</button>
         </form>
-        <ApiFetch />
+        {history &&
+          history.Worlds.map((world: World, i: number) => (
+            <ul>
+              <li>{i}</li>
+              {world["Cells"].map((cell: Cell, j: number) => (
+                <span>
+                  {cell["IsLive"] ? LIVECHAR : DEADCHAR}
+                  {(j % history.Configs.Row) - history.Configs.Row + 1 === 0 ? (
+                    <br />
+                  ) : (
+                    ""
+                  )}
+                </span>
+              ))}
+            </ul>
+          ))}
       </form>
     </div>
   );
