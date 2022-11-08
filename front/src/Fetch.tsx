@@ -28,9 +28,10 @@ const ApiFetch = () => {
   };
 
   const [history, setHistory] = useState<History>();
+  const FETCH_URL = "http://localhost:8888/world/create";
 
   useEffect(() => {
-    fetch("http://localhost:8888/world/create", {
+    fetch(FETCH_URL, {
       method: "POST",
       body: form,
     })

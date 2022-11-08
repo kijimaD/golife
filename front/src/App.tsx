@@ -5,13 +5,23 @@ import "./App.css";
 import ApiFetch from "./Fetch";
 
 function App() {
+  const worldRef = React.createRef<HTMLTextAreaElement>();
+  const genRef = React.createRef<HTMLInputElement>();
+
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    console.log("test world", worldRef.current?.value);
+    console.log("test gen", genRef.current?.value);
+    // refをもとにfetchしたい
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="" alt="logo" />
-        <img src={tomato} className="App-logo" />
-        <img src={tomato} className="App-logo" />
-        <img src={tomato} className="App-logo" />
+        <img src={tomato} className="App-logo" alt="logo" />
+        <img src={tomato} className="App-logo" alt="logo" />
+        <img src={tomato} className="App-logo" alt="logo" />
         <h2>
           <a
             className="App-link"
@@ -28,11 +38,17 @@ function App() {
       </header>
       <form>
         <label className="App-lb">初期世界</label>
-        <textarea className="App-textarea" defaultValue="●○○&#13;○●○&#13;○●○" />
+        <textarea
+          ref={worldRef}
+          className="App-textarea"
+          defaultValue="○○●○○&#13;○○○●○&#13;○○●○○&#13;○○●○○&#13;○○●○○"
+        />
         <label className="App-lb">生成数</label>
-        <input type="number" value="20" />
+        <input ref={genRef} type="number" defaultValue="100" />
         <label className="App-lb"></label>
-        <input type="submit" value="🚀創造" />
+        <form>
+          <button onClick={handleSubmit}>🚀創造</button>
+        </form>
         <ApiFetch />
       </form>
     </div>
