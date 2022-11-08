@@ -4,10 +4,30 @@ const ApiFetch = () => {
   var form = new FormData();
   // ここをフォームから取ってくる
   form.append("Debug", "true");
-  form.append("GenCap", "3");
-  form.append("InitialWorld", "●○○\n○●○\n○○○");
+  form.append("GenCap", "10");
+  form.append("InitialWorld", "●○○○○\n○○○●○\n○○●○○\n○○●○○\n○○●○○");
 
-  const [worlds, setWorlds] = useState([]);
+  type Cell = {
+    IsLive: boolean;
+  };
+
+  type World = {
+    Cells: Cell[];
+  };
+
+  type Config = {
+    Debug: boolean;
+    GenCap: number;
+    Row: number;
+    Col: number;
+  };
+
+  type History = {
+    Worlds: World[];
+    Configs: Config;
+  };
+
+  const [history, setHistory] = useState<History>();
 
   useEffect(() => {
     fetch("http://localhost:8888/world/create", {
@@ -16,7 +36,7 @@ const ApiFetch = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setWorlds(data.Worlds);
+        setHistory(data);
       });
   }, []);
 
@@ -25,14 +45,22 @@ const ApiFetch = () => {
 
   return (
     <div>
-      {worlds.map((world: any, i) => (
-        <ul>
-          <li>{i}</li>
-          {world["Cells"].map((cell: any, j: number) => (
-            <span>{cell["IsLive"] ? LIVECHAR : DEADCHAR}</span>
-          ))}
-        </ul>
-      ))}
+      {history &&
+        history.Worlds.map((world: World, i: number) => (
+          <ul>
+            <li>{i}</li>
+            {world["Cells"].map((cell: Cell, j: number) => (
+              <span>
+                {cell["IsLive"] ? LIVECHAR : DEADCHAR}
+                {(j % history.Configs.Row) - history.Configs.Row + 1 === 0 ? (
+                  <br />
+                ) : (
+                  ""
+                )}
+              </span>
+            ))}
+          </ul>
+        ))}
     </div>
   );
 };
