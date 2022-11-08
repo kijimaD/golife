@@ -11,11 +11,11 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
 
-      - name: Run
+      - name: Build
         run: |
           cd ./front && \
           npm install && \
-          npm run build
+          npm run production
 
       - name: Check
         run: ls -al ./front/build

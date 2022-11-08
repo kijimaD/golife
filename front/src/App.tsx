@@ -75,9 +75,15 @@ function App() {
           </a>
         </h2>
         <p>
-          これはトップページです。↓で渡された初期状態に基づいて、各世代の世界を返します。
+          初期状態に基づいて、各世代の世界を返します。APIサーバ直アクセスの例↓
+          <pre>
+            curl -X POST -d $'Debug=trueGenCap=10&InitialWorld=●●○\n○○○\n○○○'
+            http://kd-golife.herokuapp.com/world/create
+          </pre>
         </p>
       </header>
+
+      <li>世界の縦横の幅が同じでないとバグる</li>
 
       <form>
         <label className="App-lb">初期世界 ●=生きている ○=死んでいる</label>
@@ -95,7 +101,7 @@ function App() {
         {history &&
           history.Worlds.map((world: World, i: number) => (
             <ul>
-              <li>{i}</li>
+              <li>{i}世代</li>
               {world["Cells"].map((cell: Cell, j: number) => (
                 <span>
                   {cell["IsLive"] ? LIVECHAR : DEADCHAR}
