@@ -28,7 +28,9 @@ function App() {
   };
 
   const [history, setHistory] = useState<History>();
-  const FETCH_URL = "http://localhost:8888/world/create";
+  // TODO: 環境変数で本番用、開発用を切り替えたい
+  // let fetch_url = "http://localhost:8888/world/create";
+  let fetch_url = "https://kd-golife.herokuapp.com/world/create";
 
   function handleSubmit(e: any) {
     e.preventDefault();
@@ -42,7 +44,7 @@ function App() {
       form.append("GenCap", genRef.current.value);
     }
 
-    fetch(FETCH_URL, {
+    fetch(fetch_url, {
       method: "POST",
       body: form,
     })
@@ -82,7 +84,7 @@ function App() {
         <textarea
           ref={worldRef}
           className="App-textarea"
-          defaultValue="○○●○○&#13;○○○●○&#13;○○●○○&#13;○○●○○&#13;○○●○○"
+          defaultValue="○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○●○●○○○○○○○○&#13;○○○○○○○○○○●●●○○○○○○○&#13;○○○○○○○○○●○●○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○●○○○○○○○○&#13;○○○○○○○○○○○○●○○○○○○○&#13;○○○○○○○○○○○○○●○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○"
         />
         <label className="App-lb">生成数</label>
         <input ref={genRef} type="number" defaultValue="100" />
