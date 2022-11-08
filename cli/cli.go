@@ -19,12 +19,12 @@ const (
 const INPUT_FILE = "world.txt"
 
 func Run() {
-	h := &world.History{}
 	c := config.CLILoad()
+	h := &world.History{Configs: c}
 
 	data, _ := ioutil.ReadFile(INPUT_FILE)
 	w := world.Load(c, string(data))
-	h.Worlds = h.CreateHistory(*w, c)
+	h.Worlds = h.CreateHistory(*w)
 
 	fmt.Print("[n]ext or [p]rev\n")
 	i := 0

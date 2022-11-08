@@ -5,10 +5,11 @@ import (
 )
 
 type History struct {
-	Worlds []World
+	Worlds  []World
+	Configs config.Configs
 }
 
-func (h History) CreateHistory(initialWorld World, c config.Configs) []World {
+func (h History) CreateHistory(initialWorld World) []World {
 	var worlds []World
 	var w World
 	w = initialWorld
@@ -19,17 +20,17 @@ func (h History) CreateHistory(initialWorld World, c config.Configs) []World {
 	copy(cells, w.Cells)
 	cp := World{
 		Cells:   cells,
-		configs: c,
+		configs: h.Configs,
 	}
 	worlds = append(worlds, cp)
 
-	for i := 0; i < c.GenCap; i++ {
+	for i := 0; i < h.Configs.GenCap; i++ {
 		w = w.Next()
 		cells := make([]Cell, len(w.Cells))
 		copy(cells, w.Cells)
 		cp := World{
 			Cells:   cells,
-			configs: c,
+			configs: h.Configs,
 		}
 		worlds = append(worlds, cp)
 	}
