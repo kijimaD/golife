@@ -12,10 +12,16 @@
 .App-textarea {
   min-height: 50vh;
   min-width: 80vw;
+  line-height: 1.0;
 }
 
 .App-lb {
-  display:block;
+  display: block;
+}
+
+/* 盤面を正方形に近づける */
+span.Stage {
+  margin: 0 3px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

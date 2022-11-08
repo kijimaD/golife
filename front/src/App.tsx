@@ -103,7 +103,7 @@ function App() {
             <ul>
               <li>{i}世代</li>
               {world["Cells"].map((cell: Cell, j: number) => (
-                <span>
+                <span className="Stage">
                   {cell["IsLive"] ? LIVECHAR : DEADCHAR}
                   {(j % history.Configs.Row) - history.Configs.Row + 1 === 0 ? (
                     <br />
