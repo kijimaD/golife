@@ -41,3 +41,10 @@ func PlaneIndex(w int, i int, r coord) int {
 
 	return x + y*w
 }
+
+// ほんとはserverに置きたいけど、serverと循環参照が起きてしまうのでここに置くことにした...
+type CreateWorldParams struct {
+	InitialWorld string `form:"InitialWorld"`
+	GenCap       int    `form:"GenCap"`
+	Debug        bool   `form:"Debug"`
+}

@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"golife/config"
+	"golife/util"
 	"golife/world"
 	"net/http"
 	"os"
@@ -42,10 +43,16 @@ func root(c echo.Context) error {
 // curl -X POST -d $'Debug=true&GenCap=0&InitialWorld=●○○\n○○○\n○○○' http://localhost:8888/world/create
 // curl -X POST -d $'Debug=true&GenCap=1&InitialWorld=●●○\n○○○\n○○○' http://kd-golife.herokuapp.com/world/create
 func createWorld(con echo.Context) error {
-	c := config.ServerLoad(con)
+	var params util.CreateWorldParams
+	err := con.Bind(&params)
+	if err != nil {
+		return con.String(http.StatusBadRequest, "invalid params")
+	}
+
+	c := config.ServerLoad(params)
 	h := &world.History{Configs: c}
 
-	initialWorld := world.Load(c, con.FormValue("InitialWorld"))
+	initialWorld := world.Load(c, params.InitialWorld)
 	h.Worlds = h.CreateHistory(*initialWorld)
 
 	json, err := json.Marshal(h)

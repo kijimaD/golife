@@ -3,12 +3,10 @@ package config
 import (
 	"bufio"
 	"bytes"
-	"fmt"
 	"github.com/go-yaml/yaml"
-	"github.com/labstack/echo/v4"
+	"golife/util"
 	"io"
 	"os"
-	"strconv"
 )
 
 const INPUT_FILE = "world.txt"
@@ -43,18 +41,14 @@ func CLILoad() Configs {
 }
 
 // APIモードではリクエストからConfigsを生成する。
-func ServerLoad(con echo.Context) Configs {
+func ServerLoad(p util.CreateWorldParams) Configs {
 	c := new()
 
-	buf := bytes.NewBufferString(con.FormValue("InitialWorld"))
+	buf := bytes.NewBufferString(p.InitialWorld)
 	c.loadSize(buf)
 
-	var err error
-	c.GenCap, err = strconv.Atoi(con.FormValue("GenCap"))
-	if err != nil {
-		fmt.Printf("convert str->int failed! original value: %s", con.FormValue("GenCap"))
-	}
-	c.Debug = con.FormValue("Debug") == "true"
+	c.GenCap = p.GenCap
+	c.Debug = p.Debug
 
 	return *c
 }
