@@ -17,11 +17,10 @@ function App() {
   const DEFAULT_GENCAP = 50;
 
   // TODO: 環境変数で本番用、開発用を切り替えたい
-  // let fetch_url = "http://localhost:8888/world/create";
-  let fetch_url = "https://kd-golife.herokuapp.com/world/create";
+  // let fetchUrl = "http://localhost:8888/world/create";
+  let fetchUrl = "https://kd-golife.herokuapp.com/world/create";
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
+  function handleSubmit() {
     setIsLoading(true);
 
     var form = new FormData();
@@ -33,7 +32,7 @@ function App() {
       form.append("GenCap", genRef.current.value);
     }
 
-    fetch(fetch_url, {
+    fetch(fetchUrl, {
       method: "POST",
       body: form,
     })
@@ -52,7 +51,7 @@ function App() {
       <Board />
       <form>
         <label className="App-lb"></label>
-        <button onClick={handleSubmit} className="App-submit">
+        <button onClick={handleSubmit} className="App-submit" type="button">
           🚀創造
         </button>
         <label className="App-lb">生成数</label>
