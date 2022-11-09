@@ -2,31 +2,12 @@ import React, { useState } from "react";
 import "./App.css";
 import Loading from "./components/Loading";
 import AppHeader from "./layouts/AppHeader";
+import { History, Cell, World } from "./utils/History";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const worldRef = React.createRef<HTMLTextAreaElement>();
   const genRef = React.createRef<HTMLInputElement>();
-
-  type Cell = {
-    IsLive: boolean;
-  };
-
-  type World = {
-    Cells: Cell[];
-  };
-
-  type Config = {
-    Debug: boolean;
-    GenCap: number;
-    Row: number;
-    Col: number;
-  };
-
-  type History = {
-    Worlds: World[];
-    Configs: Config;
-  };
 
   const [history, setHistory] = useState<History>();
   // TODO: 環境変数で本番用、開発用を切り替えたい
