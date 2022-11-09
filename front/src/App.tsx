@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Loading from "./components/Loading";
 import AppHeader from "./layouts/AppHeader";
-import { History, Cell, World } from "./utils/History";
+import { History, Cell, World } from "./types/History";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,9 +65,9 @@ function App() {
           history.Worlds.map((world: World, i: number) => (
             <ul>
               <li>{i}世代</li>
-              {world["Cells"].map((cell: Cell, j: number) => (
+              {world.Cells.map((cell: Cell, j: number) => (
                 <span className="Stage">
-                  {cell["IsLive"] ? LIVECHAR : DEADCHAR}
+                  {cell.IsLive ? LIVECHAR : DEADCHAR}
                   {(j % history.Configs.Row) - history.Configs.Row + 1 === 0 ? (
                     <br />
                   ) : (
