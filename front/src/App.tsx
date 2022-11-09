@@ -5,6 +5,7 @@ import AppHeader from "./layouts/AppHeader";
 import { History, Cell, World } from "./types/History";
 import Slide from "./components/Slide";
 import Anim from "./components/Anim";
+import Board from "./components/Board";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -48,6 +49,7 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
+      <Board />
       <form>
         <label className="App-lb"></label>
         <button onClick={handleSubmit} className="App-submit">
