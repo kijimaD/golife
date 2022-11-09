@@ -3,6 +3,7 @@ package server
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"golife/config"
@@ -46,7 +47,13 @@ func createWorld(con echo.Context) error {
 	var params util.CreateWorldParams
 	err := con.Bind(&params)
 	if err != nil {
-		return con.String(http.StatusBadRequest, "invalid params")
+		return con.String(http.StatusBadRequest, err.Error())
+	}
+
+	validate := validator.New()
+	err = validate.Struct(params)
+	if err != nil {
+		return con.String(http.StatusBadRequest, err.Error())
 	}
 
 	c := config.ServerLoad(params)
