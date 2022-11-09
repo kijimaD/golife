@@ -3,6 +3,7 @@ import "./App.css";
 import Loading from "./components/Loading";
 import AppHeader from "./layouts/AppHeader";
 import { History, Cell, World } from "./types/History";
+import Slide from "./components/Slide";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,9 +42,6 @@ function App() {
       });
   }
 
-  const LIVECHAR = "●";
-  const DEADCHAR = "○";
-
   return (
     <div className="App">
       <AppHeader />
@@ -61,22 +59,7 @@ function App() {
           defaultValue="○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○●○●○○○○○○○○&#13;○○○○○○○○○○●●●○○○○○○○&#13;○○○○○○○○○●○●○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○●○○○○○○○○&#13;○○○○○○○○○○○○●○○○○○○○&#13;○○○○○○○○○○○○○●○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○"
         />
         {isLoading && <Loading />}
-        {history &&
-          history.Worlds.map((world: World, i: number) => (
-            <ul>
-              <li>{i}世代</li>
-              {world.Cells.map((cell: Cell, j: number) => (
-                <span className="Stage">
-                  {cell.IsLive ? LIVECHAR : DEADCHAR}
-                  {(j % history.Configs.Row) - history.Configs.Row + 1 === 0 ? (
-                    <br />
-                  ) : (
-                    ""
-                  )}
-                </span>
-              ))}
-            </ul>
-          ))}
+        <Slide history={history} />
       </form>
     </div>
   );
