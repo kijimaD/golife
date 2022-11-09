@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import logo from "./rms.png";
 import tomato from "./tomato.png";
 import "./App.css";
+import Loading from "./components/Loading";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
   const worldRef = React.createRef<HTMLTextAreaElement>();
   const genRef = React.createRef<HTMLInputElement>();
 
@@ -34,6 +36,7 @@ function App() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
+    setIsLoading(true);
 
     var form = new FormData();
     form.append("Debug", "true");
@@ -48,8 +51,12 @@ function App() {
       method: "POST",
       body: form,
     })
-      .then((res) => res.json())
+      .then((res) => {
+        setIsLoading(false);
+        return res.json();
+      })
       .then((data) => {
+        setIsLoading(false);
         setHistory(data);
       });
   }
@@ -97,6 +104,7 @@ function App() {
           className="App-textarea"
           defaultValue="○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○●○●○○○○○○○○&#13;○○○○○○○○○○●●●○○○○○○○&#13;○○○○○○○○○●○●○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○●○○○○○○○○&#13;○○○○○○○○○○○○●○○○○○○○&#13;○○○○○○○○○○○○○●○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○"
         />
+        {isLoading && <Loading />}
         {history &&
           history.Worlds.map((world: World, i: number) => (
             <ul>
