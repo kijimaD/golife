@@ -33,7 +33,6 @@ function App() {
       body: form,
     })
       .then((res) => {
-        setIsLoading(false);
         return res.json();
       })
       .then((data) => {
