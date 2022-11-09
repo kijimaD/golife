@@ -76,11 +76,12 @@ function App() {
         </h2>
         <p>
           初期状態に基づいて、各世代の世界を返します。APIサーバ直アクセスの例↓
-          <pre>
-            curl -X POST -d $'Debug=trueGenCap=10&InitialWorld=●●○\n○○○\n○○○'
-            http://kd-golife.herokuapp.com/world/create
-          </pre>
+          ⚠Herokuインスタンスがウォームアップしていないと時間がかかります
         </p>
+        <pre>
+          curl -X POST -d $'Debug=trueGenCap=10&InitialWorld=●●○\n○○○\n○○○'
+          http://kd-golife.herokuapp.com/world/create
+        </pre>
       </header>
 
       <form>
