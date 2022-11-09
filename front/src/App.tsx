@@ -4,6 +4,7 @@ import Loading from "./components/Loading";
 import AppHeader from "./layouts/AppHeader";
 import { History, Cell, World } from "./types/History";
 import Slide from "./components/Slide";
+import Anim from "./components/Anim";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -60,6 +61,8 @@ function App() {
           defaultValue={DefaultInput}
         />
         {isLoading && <Loading />}
+        {history && <Anim history={history} />}
+        <hr />
         <Slide history={history} />
       </form>
     </div>
