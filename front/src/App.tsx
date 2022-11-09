@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Loading from "./components/Loading";
 import AppHeader from "./layouts/AppHeader";
-import { History, Cell, World } from "./types/History";
+import { History } from "./types/History";
 import Slide from "./components/Slide";
 import Anim from "./components/Anim";
 import Board from "./components/Board";
