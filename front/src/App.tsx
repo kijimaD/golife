@@ -11,8 +11,9 @@ function App() {
   const worldRef = React.createRef<HTMLTextAreaElement>();
   const genRef = React.createRef<HTMLInputElement>();
   const [history, setHistory] = useState<History>();
-  const DefaultInput =
+  const DEFAULT_WORLD =
     "○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○●○●○○○○○○○○\n○○○○○○○○○○●●●○○○○○○○\n○○○○○○○○○●○●○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○●○○○○○○○○\n○○○○○○○○○○○○●○○○○○○○\n○○○○○○○○○○○○○●○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○";
+  const DEFAULT_GENCAP = 50;
 
   // TODO: 環境変数で本番用、開発用を切り替えたい
   // let fetch_url = "http://localhost:8888/world/create";
@@ -53,12 +54,12 @@ function App() {
           🚀創造
         </button>
         <label className="App-lb">生成数</label>
-        <input ref={genRef} type="number" defaultValue="100" />
+        <input ref={genRef} type="number" defaultValue={DEFAULT_GENCAP} />
         <label className="App-lb">初期世界 ●=生きている ○=死んでいる</label>
         <textarea
           ref={worldRef}
           className="App-textarea"
-          defaultValue={DefaultInput}
+          defaultValue={DEFAULT_WORLD}
         />
         {isLoading && <Loading />}
         {history && <Anim history={history} />}
