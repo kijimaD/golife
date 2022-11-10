@@ -15,12 +15,19 @@ const Anim = ({ history }: { history: History }) => {
     return () => clearInterval(interval);
   }, [count]);
 
+  function bar(max: number, cur: number) {
+    let amari = max - cur;
+    return "|" + "=".repeat(cur) + ">" + " ".repeat(amari) + "|";
+  }
+
   return (
     <div>
       <ul>
         <li>
           {count % history.Configs.GenCap}世代{" "}
-          {".".repeat(count % history.Configs.GenCap)}
+          <pre>
+            {bar(history.Configs.GenCap, count % history.Configs.GenCap)}
+          </pre>
         </li>
         {history.Worlds[count % history.Configs.GenCap].Cells.map(
           (cell: Cell, j: number) => (
