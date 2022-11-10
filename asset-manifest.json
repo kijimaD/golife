@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/golife/static/css/main.f5d082cd.css",
-    "main.js": "/golife/static/js/main.d410372e.js",
+    "main.css": "/golife/static/css/main.76e0ae1b.css",
+    "main.js": "/golife/static/js/main.c8ae6a61.js",
     "static/js/787.71df535f.chunk.js": "/golife/static/js/787.71df535f.chunk.js",
     "static/media/tomato.png": "/golife/static/media/tomato.ea21f9c6e5657e713eaa.png",
     "static/media/rms.png": "/golife/static/media/rms.55cc7e8d943b602c9c2e.png",
     "index.html": "/golife/index.html",
-    "main.f5d082cd.css.map": "/golife/static/css/main.f5d082cd.css.map",
-    "main.d410372e.js.map": "/golife/static/js/main.d410372e.js.map",
+    "main.76e0ae1b.css.map": "/golife/static/css/main.76e0ae1b.css.map",
+    "main.c8ae6a61.js.map": "/golife/static/js/main.c8ae6a61.js.map",
     "787.71df535f.chunk.js.map": "/golife/static/js/787.71df535f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f5d082cd.css",
-    "static/js/main.d410372e.js"
+    "static/css/main.76e0ae1b.css",
+    "static/js/main.c8ae6a61.js"
   ]
 }
