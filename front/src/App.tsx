@@ -12,6 +12,7 @@ function App() {
   const worldRef = React.createRef<HTMLTextAreaElement>();
   const genRef = React.createRef<HTMLInputElement>();
   const [history, setHistory] = useState<History>();
+  const [squares, setSquares] = useState(Array(width ** 2).fill(true));
   const DEFAULT_WORLD =
     "○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○●○●○○○○○○○○\n○○○○○○○○○○●●●○○○○○○○\n○○○○○○○○○●○●○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○●○○○○○○○○\n○○○○○○○○○○○○●○○○○○○○\n○○○○○○○○○○○○○●○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○";
   const DEFAULT_GENCAP = 50;
@@ -48,7 +49,7 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <Board />
+      <Board squares={squares} setSquares={setSquares} />
       <form>
         <label className="App-lb"></label>
         <button onClick={handleSubmit} className="App-submit" type="button">
