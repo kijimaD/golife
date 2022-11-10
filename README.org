@@ -43,7 +43,9 @@ http://kd-golife.herokuapp.com/
 
 ゲーム開始エンドポイント
 #+begin_src shell
-curl -X POST http://kd-golife.herokuapp.com/world/create
+  curl -X POST http://kd-golife.herokuapp.com/world/create
+  # 例
+  curl -X POST -d $'Debug=trueGenCap=10&InitialWorld=●●○\n○○○\n○○○' http://kd-golife.herokuapp.com/world/create
 #+end_src
 
 ** memo

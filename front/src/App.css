@@ -1,18 +1,15 @@
-.App {}
-
-.App-header {
-  background-color: #282c34;
-  color: white;
+* {
+  list-style-type: none;
 }
 
-.App-link {
-  color: #61dafb;
-}
+.App {
+  padding: 2% 2%;
+  max-width: 600px;
 
-.App-textarea {
-  min-height: 50vh;
-  min-width: 80vw;
-  line-height: 1.0;
+  /* centering */
+  width: 60%;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .App-lb {
@@ -24,12 +21,13 @@
   padding: 4px;
   display: block;
   min-width: 100%;
-  box-shadow: 0 2px 0 black;
+
+  border-radius: 4px;
+  border: 2px solid #999;
 }
 
 .App-submit:hover {
-  box-shadow: none;
-  transform: translateY(5px);
+  transform: translateY(2px);
 }
 
 /* 盤面を正方形に近づける */
@@ -37,7 +35,7 @@ span.Stage {
   margin: 0 3px;
 }
 
-/* チュートリアルから ================ */
+/* Reactチュートリアルから ================ */
 .board-row:after {
   clear: both;
   content: "";
@@ -70,20 +68,11 @@ span.Stage {
 .death {
   background-color: white;
 }
-/* ================ */
 
 .kbd-navigation .square:focus {
   background: #ddd;
 }
-
-.game {
-  display: flex;
-  flex-direction: row;
-}
-
-.game-info {
-  margin-left: 20px;
-}
+/* ================ */
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
