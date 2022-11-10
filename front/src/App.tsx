@@ -9,26 +9,41 @@ import Board from "./components/Board";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
-  const worldRef = React.createRef<HTMLTextAreaElement>();
   const genRef = React.createRef<HTMLInputElement>();
   const [history, setHistory] = useState<History>();
-  const [squares, setSquares] = useState(Array(width ** 2).fill(true));
-  const DEFAULT_WORLD =
-    "○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○●○●○○○○○○○○\n○○○○○○○○○○●●●○○○○○○○\n○○○○○○○○○●○●○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○●○○○○○○○○\n○○○○○○○○○○○○●○○○○○○○\n○○○○○○○○○○○○○●○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○\n○○○○○○○○○○○○○○○○○○○○";
+  const [width, setWidth] = useState(5);
+  const [squares, setSquares] = useState(Array(width ** 2).fill(false));
   const DEFAULT_GENCAP = 50;
 
   // TODO: 環境変数で本番用、開発用を切り替えたい
   // let fetchUrl = "http://localhost:8888/world/create";
   let fetchUrl = "https://kd-golife.herokuapp.com/world/create";
 
+  function squaresToString(squares: any[], width: number) {
+    let arr = squares.map((square: boolean, i: number) => {
+      if (square === true) {
+        return "●";
+      } else {
+        return "○";
+      }
+    });
+
+    let arrWithNewline = arr.map((s, i) => {
+      if (i % width === width - 1) {
+        return s + "\n";
+      }
+      return s;
+    });
+
+    return arrWithNewline.join("");
+  }
+
   function handleSubmit() {
     setIsLoading(true);
 
     var form = new FormData();
     form.append("Debug", "true");
-    if (worldRef.current) {
-      form.append("InitialWorld", worldRef.current.value);
-    }
+    form.append("InitialWorld", squaresToString(squares, width));
     if (genRef.current) {
       form.append("GenCap", genRef.current.value);
     }
@@ -49,25 +64,18 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
+      <label className="App-lb">初期世界 ■=生 □=死</label>
       <Board squares={squares} setSquares={setSquares} />
-      <form>
-        <label className="App-lb"></label>
-        <button onClick={handleSubmit} className="App-submit" type="button">
-          🚀創造
-        </button>
-        <label className="App-lb">生成数</label>
-        <input ref={genRef} type="number" defaultValue={DEFAULT_GENCAP} />
-        <label className="App-lb">初期世界 ●=生きている ○=死んでいる</label>
-        <textarea
-          ref={worldRef}
-          className="App-textarea"
-          defaultValue={DEFAULT_WORLD}
-        />
-        {isLoading && <Loading />}
-        {history && <Anim history={history} />}
-        <hr />
-        <Slide history={history} />
-      </form>
+      <label className="App-lb"></label>
+      <label className="App-lb">生成世代数</label>
+      <input ref={genRef} type="number" defaultValue={DEFAULT_GENCAP} />
+      <button onClick={handleSubmit} className="App-submit" type="button">
+        🚀創造
+      </button>
+      {isLoading && <Loading />}
+      {history && <Anim history={history} />}
+      <hr />
+      <Slide history={history} />
     </div>
   );
 }
