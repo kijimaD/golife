@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 
-export const Square = ({ IsLive }: { IsLive: boolean }) => {
-  const [live, setLive] = useState(IsLive);
-
+// isLive: boolean
+export const Square = ({
+  isLive,
+  click,
+}: {
+  isLive: boolean;
+  click: () => void;
+}) => {
   return (
     <>
-      {live ? (
-        <button className="square live" onClick={() => setLive(false)}></button>
+      {isLive ? (
+        <button className="square live" onClick={click}></button>
       ) : (
-        <button className="square death" onClick={() => setLive(true)}></button>
+        <button className="square death" onClick={click}></button>
       )}
     </>
   );

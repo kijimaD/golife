@@ -1,30 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import Square from "./Square";
 
-export const Board = () => {
-  function renderSquare(bool: boolean) {
-    return <Square IsLive={bool} />;
+function Board() {
+  const [squares, setSquares] = useState(Array(9).fill(true));
+
+  function renderSquare(i: number) {
+    return (
+      <Square
+        isLive={squares[i]}
+        click={() => {
+          flipSquare(i);
+        }}
+      />
+    );
   }
+
+  const flipSquare = (target_i: number) => {
+    setSquares(
+      squares.map((square, index) =>
+        index === target_i ? !squares[index] : squares[index]
+      )
+    );
+  };
 
   return (
     <>
       <div className="board-row">
-        {renderSquare(true)}
-        {renderSquare(false)}
-        {renderSquare(true)}
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
       </div>
       <div className="board-row">
-        {renderSquare(false)}
-        {renderSquare(false)}
-        {renderSquare(false)}
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
       </div>
       <div className="board-row">
-        {renderSquare(false)}
-        {renderSquare(true)}
-        {renderSquare(true)}
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
       </div>
     </>
   );
-};
+}
 
 export default Board;
