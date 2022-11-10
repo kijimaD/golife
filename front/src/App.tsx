@@ -2,56 +2,57 @@ import React, { useState } from "react";
 import "./App.css";
 import Loading from "./components/Loading";
 import AppHeader from "./layouts/AppHeader";
+import { History } from "./types/History";
+import Slide from "./components/Slide";
+import Anim from "./components/Anim";
+import Board from "./components/Board";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
-  const worldRef = React.createRef<HTMLTextAreaElement>();
   const genRef = React.createRef<HTMLInputElement>();
-
-  type Cell = {
-    IsLive: boolean;
-  };
-
-  type World = {
-    Cells: Cell[];
-  };
-
-  type Config = {
-    Debug: boolean;
-    GenCap: number;
-    Row: number;
-    Col: number;
-  };
-
-  type History = {
-    Worlds: World[];
-    Configs: Config;
-  };
-
   const [history, setHistory] = useState<History>();
-  // TODO: 環境変数で本番用、開発用を切り替えたい
-  // let fetch_url = "http://localhost:8888/world/create";
-  let fetch_url = "https://kd-golife.herokuapp.com/world/create";
+  const [width, setWidth] = useState(5);
+  const [squares, setSquares] = useState(Array(width ** 2).fill(false));
+  const DEFAULT_GENCAP = 50;
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
+  // TODO: 環境変数で本番用、開発用を切り替えたい
+  // let fetchUrl = "http://localhost:8888/world/create";
+  let fetchUrl = "https://kd-golife.herokuapp.com/world/create";
+
+  function squaresToString(squares: any[], width: number) {
+    let arr = squares.map((square: boolean, i: number) => {
+      if (square === true) {
+        return "●";
+      } else {
+        return "○";
+      }
+    });
+
+    let arrWithNewline = arr.map((s, i) => {
+      if (i % width === width - 1) {
+        return s + "\n";
+      }
+      return s;
+    });
+
+    return arrWithNewline.join("");
+  }
+
+  function handleSubmit() {
     setIsLoading(true);
 
     var form = new FormData();
     form.append("Debug", "true");
-    if (worldRef.current) {
-      form.append("InitialWorld", worldRef.current.value);
-    }
+    form.append("InitialWorld", squaresToString(squares, width));
     if (genRef.current) {
       form.append("GenCap", genRef.current.value);
     }
 
-    fetch(fetch_url, {
+    fetch(fetchUrl, {
       method: "POST",
       body: form,
     })
       .then((res) => {
-        setIsLoading(false);
         return res.json();
       })
       .then((data) => {
@@ -60,43 +61,45 @@ function App() {
       });
   }
 
-  const LIVECHAR = "●";
-  const DEADCHAR = "○";
+  const incrementWidth = () => setWidth((prevWidth) => prevWidth + 1);
+  const decrementWidth = () => setWidth((prevWidth) => prevWidth - 1);
 
   return (
     <div className="App">
       <AppHeader />
-      <form>
-        <label className="App-lb"></label>
-        <button onClick={handleSubmit} className="App-submit">
-          🚀創造
-        </button>
-        <label className="App-lb">生成数</label>
-        <input ref={genRef} type="number" defaultValue="100" />
-        <label className="App-lb">初期世界 ●=生きている ○=死んでいる</label>
-        <textarea
-          ref={worldRef}
-          className="App-textarea"
-          defaultValue="○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○●○●○○○○○○○○&#13;○○○○○○○○○○●●●○○○○○○○&#13;○○○○○○○○○●○●○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○●○○○○○○○○&#13;○○○○○○○○○○○○●○○○○○○○&#13;○○○○○○○○○○○○○●○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○&#13;○○○○○○○○○○○○○○○○○○○○"
-        />
-        {isLoading && <Loading />}
-        {history &&
-          history.Worlds.map((world: World, i: number) => (
-            <ul>
-              <li>{i}世代</li>
-              {world["Cells"].map((cell: Cell, j: number) => (
-                <span className="Stage">
-                  {cell["IsLive"] ? LIVECHAR : DEADCHAR}
-                  {(j % history.Configs.Row) - history.Configs.Row + 1 === 0 ? (
-                    <br />
-                  ) : (
-                    ""
-                  )}
-                </span>
-              ))}
-            </ul>
-          ))}
-      </form>
+      <button
+        onClick={() => {
+          incrementWidth();
+          setSquares(Array((width + 1) ** 2).fill(false));
+          /* スコープに入った時点でwidth確定し前のままなので、+1する必要がある  */
+        }}
+        className="App-submit"
+        type="button"
+      >
+        ➕
+      </button>
+      <button
+        onClick={() => {
+          decrementWidth();
+          setSquares(Array((width - 1) ** 2).fill(false));
+        }}
+        className="App-submit"
+        type="button"
+      >
+        ➖
+      </button>
+      <label className="App-lb">初期世界 ■=生 □=死</label>
+      <Board squares={squares} setSquares={setSquares} width={width} />
+      <label className="App-lb"></label>
+      <label className="App-lb">生成世代数</label>
+      <input ref={genRef} type="number" defaultValue={DEFAULT_GENCAP} />
+      <button onClick={handleSubmit} className="App-submit" type="button">
+        🚀創造
+      </button>
+      {isLoading && <Loading />}
+      {history && <Anim history={history} />}
+      <hr />
+      <Slide history={history} />
     </div>
   );
 }
