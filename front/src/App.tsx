@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Loading from "./components/Loading";
 import AppHeader from "./layouts/AppHeader";
@@ -61,11 +61,35 @@ function App() {
       });
   }
 
+  const incrementWidth = () => setWidth((prevWidth) => prevWidth + 1);
+  const decrementWidth = () => setWidth((prevWidth) => prevWidth - 1);
+
   return (
     <div className="App">
       <AppHeader />
+      <button
+        onClick={() => {
+          incrementWidth();
+          setSquares(Array((width + 1) ** 2).fill(false));
+          /* スコープに入った時点でwidth確定し前のままなので、+1する必要がある  */
+        }}
+        className="App-submit"
+        type="button"
+      >
+        ➕
+      </button>
+      <button
+        onClick={() => {
+          decrementWidth();
+          setSquares(Array((width - 1) ** 2).fill(false));
+        }}
+        className="App-submit"
+        type="button"
+      >
+        ➖
+      </button>
       <label className="App-lb">初期世界 ■=生 □=死</label>
-      <Board squares={squares} setSquares={setSquares} />
+      <Board squares={squares} setSquares={setSquares} width={width} />
       <label className="App-lb"></label>
       <label className="App-lb">生成世代数</label>
       <input ref={genRef} type="number" defaultValue={DEFAULT_GENCAP} />

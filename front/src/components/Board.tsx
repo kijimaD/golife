@@ -1,7 +1,15 @@
 import React from "react";
 import Square from "./Square";
 
-function Board({ squares, setSquares }: { squares: any; setSquares: any }) {
+function Board({
+  squares,
+  setSquares,
+  width,
+}: {
+  squares: any;
+  setSquares: any;
+  width: number;
+}) {
   function renderSquare(i: number) {
     return (
       <Square
@@ -21,43 +29,28 @@ function Board({ squares, setSquares }: { squares: any; setSquares: any }) {
     );
   };
 
+  // 連番二次元配列
+  // [[0, 1, 2],
+  //  [3, 4, 5],
+  //  [6, 7, 8]]
+  function twoDimIndex() {
+    const renban = [...Array(squares.length)].map((_, i) => i);
+    const results = [];
+    while (renban.length) results.push(renban.splice(0, width));
+    return results;
+  }
+
   return (
     <>
-      <div className="board-row">
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-        {renderSquare(3)}
-        {renderSquare(4)}
-      </div>
-      <div className="board-row">
-        {renderSquare(5)}
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-        {renderSquare(9)}
-      </div>
-      <div className="board-row">
-        {renderSquare(10)}
-        {renderSquare(11)}
-        {renderSquare(12)}
-        {renderSquare(13)}
-        {renderSquare(14)}
-      </div>
-      <div className="board-row">
-        {renderSquare(15)}
-        {renderSquare(16)}
-        {renderSquare(17)}
-        {renderSquare(18)}
-        {renderSquare(19)}
-      </div>
-      <div className="board-row">
-        {renderSquare(20)}
-        {renderSquare(21)}
-        {renderSquare(21)}
-        {renderSquare(23)}
-        {renderSquare(24)}
-      </div>
+      {twoDimIndex().map((row, ri) => {
+        return (
+          <div className="board-row">
+            {row.map((square, si) => {
+              return renderSquare(row[si]);
+            })}
+          </div>
+        );
+      })}
     </>
   );
 }
