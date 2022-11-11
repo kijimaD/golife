@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Loading from "./components/Loading";
 import AppHeader from "./layouts/AppHeader";
@@ -6,6 +6,7 @@ import { History } from "./types/History";
 import Slide from "./components/Slide";
 import Anim from "./components/Anim";
 import Board from "./components/Board";
+import Signature from "./components/Signature";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,10 +16,20 @@ function App() {
   const [squares, setSquares] = useState(Array(width ** 2).fill(false));
   const DEFAULT_GENCAP = 50;
 
+  const squareParam = getParam("s");
+  const widthParam = getParam("w");
+  useEffect(() => {
+    if (squareParam && widthParam) {
+      setSquares(JSON.parse(squareParam));
+      setWidth(Number(widthParam));
+    }
+  }, [squareParam, widthParam]);
+
   // TODO: 環境変数で本番用、開発用を切り替えたい
   // let fetchUrl = "http://localhost:8888/world/create";
   let fetchUrl = "https://kd-golife.herokuapp.com/world/create";
 
+  // バックエンドの入力が文字列なので、変換が必要。json入力を受け付けられるようになったら消せる
   function squaresToString(squares: any[], width: number) {
     let arr = squares.map((square: boolean, i: number) => {
       if (square === true) {
@@ -88,6 +99,7 @@ function App() {
       >
         ➖
       </button>
+      <Signature squares={squares} width={width} />
       <label className="App-lb">初期世界 ■=生 □=死</label>
       <Board squares={squares} setSquares={setSquares} width={width} />
       <label className="App-lb"></label>
@@ -102,6 +114,18 @@ function App() {
       <Slide history={history} />
     </div>
   );
+}
+
+// パラメータを取得する
+// (stackoverflowからコピった) react routerを導入してなくて自前で取るしかないため
+function getParam(name: string, url?: string) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return "";
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
 export default App;
