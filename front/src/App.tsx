@@ -6,7 +6,7 @@ import { History } from "./types/History";
 import Slide from "./components/Slide";
 import Anim from "./components/Anim";
 import Board from "./components/Board";
-import Signature from "./components/Signature";
+import Signature, { decompress } from "./components/Signature";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +20,7 @@ function App() {
   const widthParam = getParam("w");
   useEffect(() => {
     if (squareParam && widthParam) {
-      setSquares(JSON.parse(squareParam));
+      setSquares(JSON.parse(decompress(squareParam)));
       setWidth(Number(widthParam));
     }
   }, [squareParam, widthParam]);
