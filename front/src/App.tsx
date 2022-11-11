@@ -112,6 +112,71 @@ function App() {
       {history && <Anim history={history} />}
       <hr />
       <Slide history={history} />
+      <hr />
+      <a href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0">
+        ライフゲームのルール
+      </a>
+      <p>プリセット</p>
+      <ul>
+        ■固体物体
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywxNjEsMzksODksODIsODQsMTAsMzcsMTM2LDgwLDEzNSw4NywxMjgsMTI0LDE3OSw3LDEsMjUsMTEsMCw5Miw5MSwxNDAsMTM5&w=8">
+            蜂の巣
+          </a>
+        </li>
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywyNSwyMDQsMTAwLDczLDgxLDQxLDE0OCwzMiw5MCw1Myw2LDE0NywxMDQsNjEsMTE2LDM2LDk5LDEsMjAxLDM5LDE0MCwyMTQ=&w=8">
+            ボート
+          </a>
+        </li>
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywxNjEsNTMsODksODIsODQsMTAsMzcsMjQwLDE3MCwxOTIsOTYsMTQ2LDk5LDE4LDg1LDIwMSw4OCwwLDIwMiw1MiwxMDcsODI=&w=7">
+            船
+          </a>
+        </li>
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywxNjEsMzksODksODIsODQsMTAsMzcsMTM2LDgwLDEzNSw4NywxMjgsMTI0LDIxMywxNjQsMTg1LDEzMiw2LDEwMCw0NCwwLDg2LDg2LDEzOSwyNDU=&w=8">
+            池
+          </a>
+        </li>
+        ■振動子
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywxNjEsMTMyLDQ0LDQxLDQyLDY5LDM4LDQwLDU0LDQ4LDIyLDAsNCw1Nyw1NSwxMQ==&w=5">
+            ブリンカー
+          </a>
+        </li>
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywyNSwxMzgsMTAwLDczLDgxLDQxLDUwLDY1LDE2MSwxNzgsOTcsNzQsMTk4LDIsMCwyMTAsMTYsMTc4LDUw&w=9">
+            ヒキガエル
+          </a>
+        </li>
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywxNjEsNjMsODksODIsODQsMTAsMzcsMTY4LDE2MywxNTQsMjE4LDIzMCwyMDksMTUyLDE0MCw1LDAsODYsODYsMTM5LDI0NQ==&w=8">
+            ビーコン
+          </a>
+        </li>
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywxNjEsMzksODksODIsODQsNzQsMTY2LDM4LDE4OCw1OCw5LDE3MSwxNjAsMTcwLDEzMSw0MCwzOCw5OSwxLDgxLDk5LDE0MCwxMzk=&w=8">
+            時計
+          </a>
+        </li>
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywzMywxMzQsNDQsNDEsNDIsMTMzLDE4LDE5NiwyMzUsMjUsNzIsMTE1LDEwNSwyMjksNzQsMTE0LDIyMCwxMzksMTc0LDcsMTc1LDExOCwxNjIsMjA1LDE5OCwxMDYsNDIsMTQsMjIxLDIwLDQsNDgsMzAsMjcsMTM2LDE4MCwxNTYsNjgsMjMxLDE0NCwxMDksNDIsNTMsMTYyLDEwNiwzMiwxNDcsMjE0LDIwOCw0OCwxMTksMTMyLDE0NSwxNzcsMCwxNDYsMTUwLDIzMiwxNzg=&w=15">
+            時計Ⅱ
+          </a>
+        </li>
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywyNSwxNzQsMTAwLDczLDgxLDQxLDc4LDEsMTIsNTcsMTYyLDEzLDE5NiwxMTAsOCw2NiwxMzgsNDQsMTQ3LDczLDExNiwyMCwxMzcsMTE4LDE2LDIzNSw0NiwxMCwxNTYsNzgsMjQ3LDE4NCwzNiwyMjMsMTUxLDI0NCw4LDExMywyMzYsMjM4LDM0LDE0OCwxMTYsNDAsOCwyMCwxMjQsMTA1LDEyNSwxNDgsMjgsMTkzLDEwMCw0NCwwLDQ2LDIxNiw0NywxMTk=&w=16">
+            銀河
+          </a>
+        </li>
+        ■移動物体
+        <li>
+          <a href="https://kijimad.github.io/golife/?s=MTIwLDE1NiwxMzksNzgsNzUsMjA0LDQxLDc4LDIxMywxNjEsNTMsODksODIsODQsNzQsNTMsMjI5LDk2LDczLDQsNjUsOTksMTY3LDE5OSwyLDAsMzUsMTQwLDEwNywxNTc=&w=7">
+            グライダー
+          </a>
+        </li>
+      </ul>
     </div>
   );
 }
