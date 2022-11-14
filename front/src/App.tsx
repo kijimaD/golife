@@ -20,8 +20,11 @@ function App() {
   const widthParam = getParam("w");
   useEffect(() => {
     if (squareParam && widthParam) {
-      setSquares(JSON.parse(decompress(squareParam)));
-      setWidth(Number(widthParam));
+      const json = decompress(squareParam);
+      if (json) {
+        setSquares(JSON.parse(json));
+        setWidth(Number(widthParam));
+      }
     }
   }, [squareParam, widthParam]);
 
